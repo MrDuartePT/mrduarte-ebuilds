@@ -19,10 +19,9 @@ DEPEND="sys-kernel/linux-headers
         python? ( dev-python/pyyaml )
         python? ( dev-python/pyyaml )
         python? ( dev-python/argcomplete )"
-
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="python" #Config Later
+IUSE="python"
 
 MODULE_NAMES="legion-laptop(kernel/drivers/platform/x86:kernel_module)"
 BUILD_TARGETS="all"
@@ -33,11 +32,22 @@ pkg_setup() {
 }
 
 src_compile() {
-        linux-mod_src_compile
+    linux-mod_src_compile
 }
 
 src_install() {
-        linux-mod_src_install
+    linux-mod_src_install
 	cd kernel_module
 	make forcereloadmodule
+	python3 -m pip install -e .
+	if use python; then
+		cd .. && cd python/legion_linux
+		newbin legion_cli.py legion_cli
+		newbin legion_gui.py legion_gui
+		newbin legion.py legion.py
+		domenu legion_gui.desktop
+		doicon legion_logo.png
+		insinto /usr/share/polkit-1/actions/ && doins legion_gui.policy
+	fi
 }
+
