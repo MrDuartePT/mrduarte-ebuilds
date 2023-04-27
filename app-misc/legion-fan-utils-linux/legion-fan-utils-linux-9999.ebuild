@@ -10,6 +10,7 @@ DESCRIPTION="Small Scripts that allow to change fan speed and GPU & CPU power li
 HOMEPAGE="https://github.com/Petingoso/legion-fan-utils-linux"
 
 DEPEND="dev-lang/python
+        dev-python/psutil
         radeon_dgpu? ( dev-util/rocm-smi )
         downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.105.17 )
         acpi? ( sys-power/acpid )
