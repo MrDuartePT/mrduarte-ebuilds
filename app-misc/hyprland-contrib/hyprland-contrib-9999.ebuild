@@ -9,6 +9,8 @@ EGIT_REPO_URI="https://github.com/hyprwm/contrib.git"
 DESCRIPTION="Community scripts and utilities for Hypr projects"
 HOMEPAGE="https://github.com/hyprwm/contrib"
 
+DEPEND="app-portage/smart-live-rebuild"
+
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="grimblast scratchpad shellevents"

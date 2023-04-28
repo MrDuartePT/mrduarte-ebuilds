@@ -12,7 +12,8 @@ HOMEPAGE="https://github.com/Petingoso/legion-fan-utils-linux"
 DEPEND="dev-lang/python
         radeon_dgpu? ( dev-util/rocm-smi )
         downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.105.17 )
-        acpi? ( sys-power/acpid )"
+        acpi? ( sys-power/acpid )
+        app-portage/smart-live-rebuild"
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="systemd acpi radeon_dgpu downgrade-nvidia"

@@ -18,7 +18,8 @@ DEPEND="sys-kernel/linux-headers
         python? ( dev-python/pyyaml )
         python? ( dev-python/pyyaml )
         python? ( dev-python/pyyaml )
-        python? ( dev-python/argcomplete )"
+        python? ( dev-python/argcomplete )
+		app-portage/smart-live-rebuild"
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="python"
