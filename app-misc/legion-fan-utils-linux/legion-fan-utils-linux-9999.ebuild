@@ -9,7 +9,8 @@ EGIT_REPO_URI="https://github.com/Petingoso/legion-fan-utils-linux.git"
 DESCRIPTION="Small Scripts that allow to change fan speed and GPU & CPU power limit on legion laptops"
 HOMEPAGE="https://github.com/Petingoso/legion-fan-utils-linux"
 
-DEPEND="dev-lang/python
+DEPEND="sys-firmware/lenovolegionlinux
+        dev-lang/python
         dev-python/psutil
         radeon_dgpu? ( dev-util/rocm-smi )
         downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.105.17 )

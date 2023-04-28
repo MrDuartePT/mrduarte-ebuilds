@@ -3,9 +3,14 @@
 
 EAPI=7
 
-inherit linux-mod toolchain-funcs
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{9..11} )
 
+inherit linux-mod toolchain-funcs
 inherit git-r3
+inherit distutils-r1
+inherit desktop
+
 EGIT_REPO_URI="https://github.com/johnfanv2/LenovoLegionLinux.git"
 
 DESCRIPTION="Lenovo Legion Linux (LLL) brings additional drivers and tools for Lenovo Legion series laptops to Linux."
@@ -40,12 +45,11 @@ src_install() {
     linux-mod_src_install
 	cd kernel_module
 	make forcereloadmodule
-	python3 -m pip install -e .
 	if use python; then
-		cd .. && cd python/legion_linux
-		newbin legion_cli.py legion_cli
-		newbin legion_gui.py legion_gui
-		newbin legion.py legion.py
+		cd .. && cd python/legion_linux/
+		distutils-r1_python_install_all
+		#Desktop Files and Polkit
+		cd legion_linux
 		domenu legion_gui.desktop
 		doicon legion_logo.png
 		insinto /usr/share/polkit-1/actions/ && doins legion_gui.policy
