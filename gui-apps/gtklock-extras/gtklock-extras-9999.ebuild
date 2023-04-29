@@ -12,25 +12,30 @@ DEPEND="app-portage/smart-live-rebuild"
 
 LICENSE="GPL-2"
 SLOT="0"
+DEPEND="x11-libs/gtk+
+        virtual/pkgconfig
+        playerctl? ( dev-go/act )
+        playerctl? ( net-libs/libsoup )
+        userinfo? ( sys-apps/accountsservice )"
 IUSE="playerctl powerbar userinfo"
-BUILD_TARGETS="all"
+REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
 src_install() {
     if use playerctl; then
         cd ${S}/gtklock-powerbar-module
-        emake -j1
-        insinto /usr/local/lib/gtklock/ && doins playerctl-module.so
+        make
+        insinto /usr/local/lib/gtklock/ && doins powerbar-module.so
     fi
 
     if use powerbar; then
         cd ${S}/gtklock-playerctl-module
-        emake -j1
-        insinto /usr/local/lib/gtklock/ && doins powerbar-module.so
+        make
+        insinto /usr/local/lib/gtklock/ && doins playerctl-module.so
     fi
     
     if use userinfo; then
         cd ${S}/gtklock-userinfo-module
-        emake -j1
+        make
         insinto /usr/local/lib/gtklock/ && doins userinfo-module.so
     fi
 }

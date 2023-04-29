@@ -19,6 +19,7 @@ DEPEND="sys-firmware/lenovolegionlinux
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="systemd acpi radeon_dgpu downgrade-nvidia"
+REQUIRED_USE="|| ( systemd acpi radeon_dgpu downgrade-nvidia ) radeon_dgpu? ( !downgrade-nvidia ) downgrade-nvidia? ( !radeon_dgpu )"
 
 src_install() {
     insinto /etc/lenovo-fan-control/ && doins service/fancurve-set.sh

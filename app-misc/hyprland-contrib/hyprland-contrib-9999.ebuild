@@ -14,6 +14,7 @@ DEPEND="app-portage/smart-live-rebuild"
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="grimblast scratchpad shellevents hyprprop"
+REQUIRED_USE="|| ( grimblast scratchpad shellevents hyprprop )"
 BUILD_TARGETS="install"
 
 src_install() {
