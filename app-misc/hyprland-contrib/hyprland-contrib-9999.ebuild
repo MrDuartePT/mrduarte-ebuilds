@@ -13,32 +13,32 @@ DEPEND="app-portage/smart-live-rebuild"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="grimblast scratchpad shellevents"
+IUSE="grimblast scratchpad shellevents hyprprop"
 BUILD_TARGETS="install"
 
 src_install() {
     if use grimblast; then
-        cd grimblast
-        emake CC="$(tc-getCC)" \
-		    CPPFLAGS="${CPPFLAGS}" \
-		    CFLAGS="${CFLAGS}" \
-		    LDFLAGS="${LDFLAGS}"
+        cd ${S}/grimblast
+        newbin grimblast grimblast
+        dodoc grimblast.1.scd
     fi
 
     if use scratchpad; then
-        cd scratchpad
-        emake CC="$(tc-getCC)" \
-		    CPPFLAGS="${CPPFLAGS}" \
-		    CFLAGS="${CFLAGS}" \
-		    LDFLAGS="${LDFLAGS}"
+        cd ${S}/scratchpad
+        newbin scratchpad scratchpad
     fi
     
     if use shellevents; then
-        cd shellevents
-        emake CC="$(tc-getCC)" \
-		    CPPFLAGS="${CPPFLAGS}" \
-		    CFLAGS="${CFLAGS}" \
-		    LDFLAGS="${LDFLAGS}"
+        cd ${S}/shellevents
+        newbin shellevents shellevents
+        newbin shellevents_default.sh shellevents_default.sh
     fi
+    
+    if use hyprprop; then
+        cd ${S}/hyprprop
+        newbin hyprprop hyprprop
+        dodoc hyprprop.1.scd
+    fi
+    
 }
 
