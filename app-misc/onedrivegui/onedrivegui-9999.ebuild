@@ -4,6 +4,7 @@
 EAPI=7
 
 inherit git-r3
+inherit desktop
 EGIT_REPO_URI="https://github.com/bpozdena/OneDriveGUI.git"
 
 DESCRIPTION="Small Scripts that allow to change fan speed and GPU & CPU power limit on legion laptops"
@@ -20,10 +21,9 @@ SLOT="0"
 
 
 src_install() {
-    sed -i 'Path=d' src/resources/OneDriveGUI.desktop
-    sed -i 's/Icon=/home/bob/host_share/Python/OneDriveGUI/src/resources/images/icons8-clouds-48.png/OneDriveGUI.ico/g' src/resources/OneDriveGUI.desktop
-    newbin src/OneDriveGUI.py OneDriveGUI
-    domenu src/resources/OneDriveGUI.desktop
-    doicon src/resources/images/OneDriveGUI.ico
+    insinto /usr/local/bin/ && doins ${WORKDIR}/${P}/src/OneDriveGUI.py #Fix ui error on gentoo
+    doicon ${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico
+    domenu ${FILESDIR}/OneDriveGUI.desktop
+    newbin ${FILESDIR}/OneDriveGUI.sh OneDriveGUI
 }
 
