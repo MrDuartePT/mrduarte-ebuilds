@@ -13,12 +13,10 @@ HOMEPAGE="https://github.com/bpozdena/OneDriveGUI"
 
 DEPEND="dev-lang/python
         net-misc/onedrive
-        dev-python/pyside6[+widgets +webengine +quick +webchannel +qml]
-        dev-python/requests"
+        dev-python/requests
+        dev-python/pyside6[webengine(+)]"
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="webengine"
-REQUIRED_USE="^^ ( webengine )"
 
 
 src_install() {
