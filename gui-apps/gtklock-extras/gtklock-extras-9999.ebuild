@@ -22,19 +22,19 @@ REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
 src_install() {
     if use playerctl; then
-        cd ${S}/gtklock-powerbar-module
+        cd ${WORKDIR}/${P}/gtklock-powerbar-module
         make
         insinto /usr/local/lib/gtklock/ && doins powerbar-module.so
     fi
 
     if use powerbar; then
-        cd ${S}/gtklock-playerctl-module
+        cd ${WORKDIR}/${P}/gtklock-playerctl-module
         make
         insinto /usr/local/lib/gtklock/ && doins playerctl-module.so
     fi
     
     if use userinfo; then
-        cd ${S}/gtklock-userinfo-module
+        cd ${WORKDIR}/${P}/gtklock-userinfo-module
         make
         insinto /usr/local/lib/gtklock/ && doins userinfo-module.so
     fi

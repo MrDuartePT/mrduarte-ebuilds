@@ -19,24 +19,24 @@ BUILD_TARGETS="install"
 
 src_install() {
     if use grimblast; then
-        cd ${S}/grimblast
+        cd ${WORKDIR}/${P}/grimblast
         newbin grimblast grimblast
         dodoc grimblast.1.scd
     fi
 
     if use scratchpad; then
-        cd ${S}/scratchpad
+        cd ${WORKDIR}/${P}/scratchpad
         newbin scratchpad scratchpad
     fi
     
     if use shellevents; then
-        cd ${S}/shellevents
+        cd ${WORKDIR}/${P}/shellevents
         newbin shellevents shellevents
         newbin shellevents_default.sh shellevents_default.sh
     fi
     
     if use hyprprop; then
-        cd ${S}/hyprprop
+        cd ${WORKDIR}/${P}/hyprprop
         newbin hyprprop hyprprop
         dodoc hyprprop.1.scd
     fi

@@ -30,26 +30,19 @@ IUSE="python"
 MODULE_NAMES="legion-laptop(kernel/drivers/platform/x86:kernel_module)"
 BUILD_TARGETS="all"
 
-pkg_setup() {
-	cd ${S}/kernel_module
-	linux-mod_pkg_setup
-    export KERNELRELEASE=${KV_FULL}
-}
-
 src_compile() {
-	cd ${S}/kernel_module
-    linux-mod_src_compile
+	linux-mod_src_compile
 }
 
 src_install() {
-	cd ${S}/kernel_module
-    linux-mod_src_install
+	linux-mod_src_install
+	cd ${WORKDIR}/${P}/kernel_module
 	make forcereloadmodule
-	if use python; then
-		cd ${S}/python/legion_linux/
+		if use python; then
+		cd ${WORKDIR}/${P}/python/legion_linux/
 		distutils-r1_python_install_all
 		#Desktop Files and Polkit
-		cd legion_linux
+		cd ${WORKDIR}/${P}/python/legion_linux/legion_linux
 		domenu legion_gui.desktop
 		doicon legion_logo.png
 		insinto /usr/share/polkit-1/actions/ && doins legion_gui.policy
