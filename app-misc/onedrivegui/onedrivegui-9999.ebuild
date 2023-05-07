@@ -16,7 +16,7 @@ DEPEND="dev-lang/python
         net-misc/onedrive
         dev-python/requests
         dev-python/pyside6[webengine(+)]"
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 
 

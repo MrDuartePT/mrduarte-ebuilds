@@ -11,7 +11,7 @@ HOMEPAGE="https://github.com/hyprwm/contrib"
 
 DEPEND="app-portage/smart-live-rebuild"
 
-LICENSE="GPL-2"
+LICENSE="MIT"
 SLOT="0"
 IUSE="grimblast scratchpad shellevents hyprprop"
 REQUIRED_USE="|| ( grimblast scratchpad shellevents hyprprop )"

@@ -8,15 +8,14 @@ EGIT_REPO_URI="https://github.com/MrDuartePT/gtklock-modules-gentoo.git"
 DESCRIPTION="Gtklock modules"
 HOMEPAGE="https://github.com/jovanlanik/gtklock"
 
-DEPEND="app-portage/smart-live-rebuild"
-
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 DEPEND="x11-libs/gtk+
         virtual/pkgconfig
         playerctl? ( dev-go/act )
         playerctl? ( net-libs/libsoup )
-        userinfo? ( sys-apps/accountsservice )"
+        userinfo? ( sys-apps/accountsservice )
+        app-portage/smart-live-rebuild"
 IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 

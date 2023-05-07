@@ -16,7 +16,7 @@ DEPEND="sys-firmware/lenovolegionlinux
         downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.105.17 )
         acpi? ( sys-power/acpid )
         app-portage/smart-live-rebuild"
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 IUSE="systemd acpi radeon_dgpu downgrade-nvidia"
 REQUIRED_USE="|| ( systemd acpi radeon_dgpu downgrade-nvidia ) radeon_dgpu? ( !downgrade-nvidia ) downgrade-nvidia? ( !radeon_dgpu )"
