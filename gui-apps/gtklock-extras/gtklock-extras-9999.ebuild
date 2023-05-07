@@ -10,18 +10,12 @@ HOMEPAGE="https://github.com/jovanlanik/gtklock"
 
 LICENSE="GPL-3"
 SLOT="0"
-
-RDEPEND="gui-apps/gtklock"
-
-BDEPEND="x11-libs/gtk+
+DEPEND="x11-libs/gtk+
         virtual/pkgconfig
         playerctl? ( dev-go/act )
         playerctl? ( net-libs/libsoup )
-        userinfo? ( sys-apps/accountsservice )"
-
-DEPEND="${RDEPEND}
+        userinfo? ( sys-apps/accountsservice )
         app-portage/smart-live-rebuild"
-
 IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
