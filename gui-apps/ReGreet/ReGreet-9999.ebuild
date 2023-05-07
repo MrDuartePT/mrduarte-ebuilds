@@ -3,8 +3,7 @@
 
 EAPI=7
 
-inherit git-r3
-inherit cargo
+inherit cargo git-r3 
 
 EGIT_REPO_URI="https://github.com/rharish101/ReGreet.git"
 
@@ -27,13 +26,18 @@ BDEPEND="
 IUSE="gtk4 logs cage sway"
 REQUIRED_USE="|| ( cage sway ) cage? ( !sway ) sway? ( !cage )"
 
+src_unpack() {
+    git-r3_src_unpack 
+    cargo_live_src_unpack
+}
+
 src_configure() {
     if use gtk4; then
         local myfeatures=(
-            all-features
+            gtk4_8
         )
     fi
-    cargo_src_configure  
+    cargo_src_configure
 }
 
 src_compile() {
@@ -41,11 +45,7 @@ src_compile() {
 }
 
 src_install() {
-    cargo_src_install --path /usr/bin/
-    if use logs; then
-        insinto /etc/tmpfiles.d/ && newins ${WORKDIR}/${P}/regreet.conf
-        systemd-tmpfiles --create "$PWD/systemd-tmpfiles.conf"
-    fi
+    newbin ${WORKDIR}/${P}/target/release/regreet regreet
     if use cage; then
         insinto /etc/greetd/ && newins ${FILESDIR}/config-cage.toml config.toml
         echo "Restart cage service to verify if works (Only activate on TTY1)"
@@ -54,5 +54,12 @@ src_install() {
         insinto /etc/greetd/ && newins ${FILESDIR}/config-sway.toml config.toml
         insinto /etc/greetd/ && doins ${FILESDIR}/sway-config
         echo "Restart cage service to verify if works (Only activate on TTY1)"
+    fi
+}
+
+src_post_install () {
+    if use logs; then
+        insinto /etc/tmpfiles.d/ && newins ${WORKDIR}/${P}/systemd-tmpfiles.conf regreet.conf
+        systemd-tmpfiles --create "$PWD/systemd-tmpfiles.conf"
     fi
 }
