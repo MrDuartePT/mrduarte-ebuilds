@@ -20,22 +20,22 @@ IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
 src_install() {
-    if use playerctl; then
-        cd ${WORKDIR}/${P}/gtklock-powerbar-module
-        make
-        insinto /usr/local/lib/gtklock/ && doins powerbar-module.so
+    if use powerbar; then
+       pushd gtklock-powerbar-module || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
 
     if use powerbar; then
-        cd ${WORKDIR}/${P}/gtklock-playerctl-module
-        make
-        insinto /usr/local/lib/gtklock/ && doins playerctl-module.so
+       pushd gtklock-playerctl-module || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
     
     if use userinfo; then
-        cd ${WORKDIR}/${P}/gtklock-userinfo-module
-        make
-        insinto /usr/local/lib/gtklock/ && doins userinfo-module.so
+       pushd gtklock-userinfo-module || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
 }
 

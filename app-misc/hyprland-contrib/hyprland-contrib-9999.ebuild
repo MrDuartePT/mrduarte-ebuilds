@@ -1,5 +1,6 @@
 # Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
+#Guru also create a ebuild if you what to use instead: https://github.com/gentoo-mirror/guru/blob/master/gui-wm/hyprland-contrib/hyprland-contrib-0.1.ebuild
 
 EAPI=7
 
@@ -9,36 +10,72 @@ EGIT_REPO_URI="https://github.com/hyprwm/contrib.git"
 DESCRIPTION="Community scripts and utilities for Hypr projects"
 HOMEPAGE="https://github.com/hyprwm/contrib"
 
-DEPEND="app-portage/smart-live-rebuild"
+RDEPEND="
+	app-shells/bash
+	gui-wm/hyprland
+	grimblast? (
+		gui-apps/wl-clipboard
+		gui-apps/grim
+		app-misc/jq
+		gui-apps/slurp
+		app-misc/jq
+	)
+	hyprprop? (
+		app-misc/jq
+		gui-apps/slurp
+	)
+	scratchpad? (
+		sys-apps/sed
+		app-misc/jq
+		gui-apps/slurp
+		app-misc/jq
+	)
+"
+BDEPEND="
+	grimblast? (
+		app-text/scdoc
+	)
+	hyprprop? (
+		app-text/scdoc
+	)
+"
+DEPEND="${RDEPEND}
+        app-portage/smart-live-rebuild"
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="grimblast scratchpad shellevents hyprprop"
-REQUIRED_USE="|| ( grimblast scratchpad shellevents hyprprop )"
-BUILD_TARGETS="install"
+IUSE="grimblast scratchpad shellevents hyprprop swap"
+REQUIRED_USE="|| ( grimblast scratchpad shellevents hyprprop swap )"
 
 src_install() {
     if use grimblast; then
-        cd ${WORKDIR}/${P}/grimblast
-        newbin grimblast grimblast
-        dodoc grimblast.1.scd
+	   pushd grimblast || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
 
     if use scratchpad; then
-        cd ${WORKDIR}/${P}/scratchpad
-        newbin scratchpad scratchpad
+	   pushd grimblast || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
     
     if use shellevents; then
-        cd ${WORKDIR}/${P}/shellevents
-        newbin shellevents shellevents
-        newbin shellevents_default.sh shellevents_default.sh
+	   pushd grimblast || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
     
     if use hyprprop; then
-        cd ${WORKDIR}/${P}/hyprprop
-        newbin hyprprop hyprprop
-        dodoc hyprprop.1.scd
+	   pushd grimblast || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
+    fi
+
+    if use swap; then
+	   pushd try_swap_workspace || die
+	   PREFIX="${D}/usr" emake install
+	   popd || die
     fi
     
 }
