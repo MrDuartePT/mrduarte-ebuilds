@@ -13,7 +13,7 @@ DEPEND="sys-firmware/lenovolegionlinux
         dev-lang/python
         dev-python/psutil
         radeon_dgpu? ( dev-util/rocm-smi )
-        downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.116.03 )
+        downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.116.04 )
         acpi? ( sys-power/acpid )
         app-portage/smart-live-rebuild"
 LICENSE="GPL-3"
