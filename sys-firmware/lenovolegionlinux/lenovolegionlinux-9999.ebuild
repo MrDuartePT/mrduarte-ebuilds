@@ -28,7 +28,8 @@ MODULE_NAMES="legion-laptop(kernel/drivers/platform/x86:kernel_module)"
 BUILD_TARGETS="all"
 
 src_compile() {
-	linux-mod_src_compile
+	BUILD_FIXES="KERNELVERSION=${KV_FULL}"
+    linux-mod_src_compile
 }
 
 src_install() {
