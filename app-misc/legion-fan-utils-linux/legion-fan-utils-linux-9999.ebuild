@@ -6,7 +6,7 @@ EAPI=7
 inherit git-r3
 EGIT_REPO_URI="https://github.com/Petingoso/legion-fan-utils-linux.git"
 
-DESCRIPTION="Small Scripts that allow to change fan speed and GPU & CPU power limit on legion laptops"
+DESCRIPTION="Small Scripts for Lenovo Legion Laptops"
 HOMEPAGE="https://github.com/Petingoso/legion-fan-utils-linux"
 
 DEPEND="sys-firmware/lenovolegionlinux

@@ -5,6 +5,9 @@
 		<email>gonegrier.duarte@gmail.com</email>
 		<name>Gonçalo Nergrier Duarte</name>
 	</maintainer>
+	<longdescription>
+		Lenovo Legion Linux (LLL) brings additional drivers and tools for Lenovo Legion series laptops to Linux.
+	</longdescription>
 	<upstream>
 		<remote-id type="github">johnfanv2/LenovoLegionLinux</remote-id>
 		<bugs-to>https://github.com/johnfanv2/LenovoLegionLinux/issues</bugs-to>

@@ -10,7 +10,7 @@ inherit linux-mod toolchain-funcs git-r3 distutils-r1 desktop
 
 EGIT_REPO_URI="https://github.com/johnfanv2/LenovoLegionLinux.git"
 
-DESCRIPTION="Lenovo Legion Linux (LLL) brings additional drivers and tools for Lenovo Legion series laptops to Linux."
+DESCRIPTION="Lenovo Legion Linux kernel module"
 HOMEPAGE="https://github.com/johnfanv2/LenovoLegionLinux"
 
 DEPEND="sys-kernel/linux-headers
