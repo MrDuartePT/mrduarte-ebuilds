@@ -1,6 +1,5 @@
 # Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-#Guru also create a ebuild if you what to use instead: https://github.com/gentoo-mirror/guru/blob/master/gui-wm/hyprland-contrib/hyprland-contrib-0.1.ebuild
 
 EAPI=7
 
@@ -16,7 +15,6 @@ RDEPEND="
 	grimblast? (
 		gui-apps/wl-clipboard
 		gui-apps/grim
-		app-misc/jq
 		gui-apps/slurp
 		app-misc/jq
 	)
@@ -26,7 +24,6 @@ RDEPEND="
 	)
 	scratchpad? (
 		sys-apps/sed
-		app-misc/jq
 		gui-apps/slurp
 		app-misc/jq
 	)
