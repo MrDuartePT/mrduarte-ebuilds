@@ -11,6 +11,6 @@
 	<upstream>
 		<remote-id type="github">johnfanv2/LenovoLegionLinux</remote-id>
 		<bugs-to>https://github.com/johnfanv2/LenovoLegionLinux/issues</bugs-to>
-    	<changelog>https://github.com/johnfanv2/LenovoLegionLinux/blob/main/FEATURES_AND_TESTING.md</changelog>
+    	<changelog>https://github.com/johnfanv2/LenovoLegionLinux/blob/main/README.md</changelog>
 	</upstream>
 </pkgmetadata>

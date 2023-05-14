@@ -11,10 +11,12 @@
         <changelog>https://github.com/Petingoso/legion-fan-utils-linux/blob/main/README.md</changelog>
 	</upstream>
 	<longdescription>
-		Small Scripts that allow to change fan speed and GPU & CPU power limit on legion laptops.
+		Small Scripts that allow to change fan speed and GPU and CPU power limit on legion laptops.
 	</longdescription>
     <use>
     	<flag name="radeon_dgpu">Support to control TDP on AMD GPU.</flag>
-    	<flag name="downgrade-nvidia">Support to control TDP on NVIDIA GPU (downgrades nvidia driver to 525).</flag>
+    	<flag name="downgrade-nvidia">
+			Support to control TDP on NVIDIA GPU (downgrades nvidia driver to 525).
+		</flag>
 	</use>
 </pkgmetadata>

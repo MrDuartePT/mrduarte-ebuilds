@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit git-r3
+inherit git-r3 python-any-r1
 EGIT_REPO_URI="https://github.com/Petingoso/legion-fan-utils-linux.git"
 
 DESCRIPTION="Small Scripts for Lenovo Legion Laptops"
@@ -13,7 +13,7 @@ DEPEND="sys-firmware/lenovolegionlinux
         dev-lang/python
         dev-python/psutil
         radeon_dgpu? ( dev-util/rocm-smi )
-        downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.116.04 )
+        downgrade-nvidia? ( =x11-drivers/nvidia-drivers-525.116.04::gentoo )
         acpi? ( sys-power/acpid )
         app-portage/smart-live-rebuild"
 LICENSE="GPL-3"
