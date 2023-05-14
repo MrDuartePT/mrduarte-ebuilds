@@ -14,6 +14,8 @@ LICENSE="GPL-3"
 SLOT="0"
 DEPEND="x11-libs/gtk+:3
         gtk4? ( gui-libs/gtk )
+        cage? ( gui-wm/cage )
+        sway? ( gui-wm/sway )
         || ( gui-wm/cage gui-wm/sway )
         app-portage/smart-live-rebuild"
 RDEPEND="
