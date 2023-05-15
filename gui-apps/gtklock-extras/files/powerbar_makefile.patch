@@ -1,0 +1,10 @@
+--- makefile	2023-04-29 21:29:24.867035802 +0100
++++ makefile	2023-05-25 18:58:47.498587467 +0100
+@@ -5,7 +5,6 @@
+ 
+ NAME := powerbar-module.so
+ 
+-PREFIX = /usr/local
+ INSTALL = install
+ 
+ LIBS := gtk+-3.0 gmodule-export-2.0

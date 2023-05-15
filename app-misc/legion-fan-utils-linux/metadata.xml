@@ -15,8 +15,7 @@
 	</longdescription>
     <use>
     	<flag name="radeon_dgpu">Support to control TDP on AMD GPU.</flag>
-    	<flag name="downgrade-nvidia">
-			Support to control TDP on NVIDIA GPU (downgrades nvidia driver to 525).
-		</flag>
+    	<flag name="downgrade-nvidia">Support to control TDP on NVIDIA GPU (downgrades nvidia driver to 525).</flag>
+		<flag name="ryzenadj">Intall RyzenAdj.</flag>
 	</use>
 </pkgmetadata>

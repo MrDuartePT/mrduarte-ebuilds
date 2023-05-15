@@ -1,0 +1,10 @@
+--- makefile	2023-04-29 21:29:16.043702093 +0100
++++ makefile	2023-05-25 18:57:16.784830568 +0100
+@@ -5,7 +5,6 @@
+ 
+ NAME := playerctl-module.so
+ 
+-PREFIX = /usr/local
+ INSTALL = install
+ 
+ LIBS := gtk+-3.0 gmodule-export-2.0 playerctl libsoup-2.4

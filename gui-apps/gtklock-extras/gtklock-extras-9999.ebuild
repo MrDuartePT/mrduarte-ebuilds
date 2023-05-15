@@ -25,23 +25,43 @@ DEPEND="${RDEPEND}
 IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
-src_install() {
-    if use powerbar; then
-       pushd gtklock-powerbar-module || die
-	   PREFIX="${D}/usr" emake install
-	   popd || die
-    fi
-
-    if use powerbar; then
-       pushd gtklock-playerctl-module || die
-	   PREFIX="${D}/usr" emake install
-	   popd || die
-    fi
+src_prepare() {
+      if use powerbar; then
+            pushd gtklock-powerbar-module || die
+            eapply "${FILESDIR}/powerbar_makefile.patch"
+	      popd || die
+      fi
     
-    if use userinfo; then
-       pushd gtklock-userinfo-module || die
-	   PREFIX="${D}/usr" emake install
-	   popd || die
-    fi
+      if use playerctl; then
+            pushd gtklock-playerctl-module || die
+	      eapply "${FILESDIR}/playerctl_makefile.patch"
+	      popd || die
+      fi
+    
+      if use userinfo; then
+            pushd gtklock-userinfo-module || diee
+            eapply "${FILESDIR}/userinfo_makefile.patch"
+            popd || die
+      fi
+}
+
+src_install() {
+      if use powerbar; then
+            pushd gtklock-powerbar-module || die
+	      PREFIX="${D}/usr" emake install
+	      popd || die
+      fi
+
+      if use playerctl; then
+            pushd gtklock-playerctl-module || die
+	      PREFIX="${D}/usr" emake install
+	      popd || die
+      fi
+    
+      if use userinfo; then
+            pushd gtklock-userinfo-module || die
+            PREFIX="${D}/usr" emake install
+            popd || die
+      fi
 }
 

@@ -1,0 +1,10 @@
+--- makefile	2023-04-29 21:29:34.137036327 +0100
++++ makefile	2023-05-25 18:59:27.418785330 +0100
+@@ -5,7 +5,6 @@
+ 
+ NAME := userinfo-module.so
+ 
+-PREFIX = /usr/local
+ INSTALL = install
+ 
+ LIBS := gtk+-3.0 gmodule-export-2.0 accountsservice

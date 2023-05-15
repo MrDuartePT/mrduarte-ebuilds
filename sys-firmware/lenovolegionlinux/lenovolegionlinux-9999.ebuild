@@ -6,6 +6,8 @@ EAPI=7
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{9..11} )
 
+EPYTHON=python3
+
 inherit linux-mod toolchain-funcs git-r3 distutils-r1 desktop
 
 EGIT_REPO_URI="https://github.com/johnfanv2/LenovoLegionLinux.git"
@@ -30,20 +32,28 @@ BUILD_TARGETS="all"
 src_compile() {
 	BUILD_FIXES="KERNELVERSION=${KV_FULL}"
     linux-mod_src_compile
+	if use python; then
+		#Define build dir (fix sandboxed)
+		cd "${WORKDIR}/${P}/python/legion_linux/"
+		distutils-r1_src_compile --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
+	fi
 }
 
 src_install() {
 	linux-mod_src_install
+	#Load the module without reboot
 	cd ${WORKDIR}/${P}/kernel_module
 	make forcereloadmodule
-		if use python; then
-		cd ${WORKDIR}/${P}/python/legion_linux/
-		distutils-r1_python_install_all
-		#Desktop Files and Polkit
-		cd ${WORKDIR}/${P}/python/legion_linux/legion_linux
-		domenu legion_gui.desktop
+	if use python; then
+		#Define build dir (fix sandboxed)
+		cd "${WORKDIR}/${P}/python/legion_linux/"
+		distutils-r1_src_install --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
+
+		# Desktop Files and Polkit
+		cd "${WORKDIR}/${P}/python/legion_linux/legion_linux"
+		domenu "${FILESDIR}/legion_gui.desktop"
 		doicon legion_logo.png
-		insinto /usr/share/polkit-1/actions/ && doins legion_gui.policy
+		insinto "/usr/share/polkit-1/actions/" && doins legion_gui.policy
 	fi
 }
 
