@@ -34,7 +34,7 @@ src_compile() {
     linux-mod_src_compile
 	if use python; then
 		#Define build dir (fix sandboxed)
-		cd "${WORKDIR}/${P}/python/legion_linux/"
+		cd "${WORKDIR}/${P}/python/legion_linux"
 		distutils-r1_src_compile --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
 	fi
 }
@@ -42,7 +42,7 @@ src_compile() {
 src_install() {
 	linux-mod_src_install
 	#Load the module without reboot
-	cd ${WORKDIR}/${P}/kernel_module
+	cd "${WORKDIR}/${P}/python/legion_linux/"
 	make forcereloadmodule
 	if use python; then
 		#Define build dir (fix sandboxed)

@@ -26,25 +26,25 @@ IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"
 
 src_prepare() {
+
       if use powerbar; then
-            pushd gtklock-powerbar-module || die
-            eapply "${FILESDIR}/powerbar_makefile.patch"
-	      popd || die
+        pushd gtklock-powerbar-module || die
+        eapply "${FILESDIR}/powerbar_makefile.patch"
+        popd || die
       fi
-    
+
       if use playerctl; then
-            pushd gtklock-playerctl-module || die
-	      eapply "${FILESDIR}/playerctl_makefile.patch"
-	      popd || die
+        pushd gtklock-playerctl-module || die
+        eapply "${FILESDIR}/playerctl_makefile.patch"
+        popd || die
       fi
-    
+
       if use userinfo; then
-            pushd gtklock-userinfo-module || diee
-            eapply "${FILESDIR}/userinfo_makefile.patch"
-            popd || die
+        pushd gtklock-userinfo-module || die
+        eapply "${FILESDIR}/userinfo_makefile.patch"
+        popd || die
       fi
 }
-
 src_install() {
       if use powerbar; then
             pushd gtklock-powerbar-module || die

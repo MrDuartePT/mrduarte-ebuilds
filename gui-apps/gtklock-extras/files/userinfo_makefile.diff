@@ -1,5 +1,7 @@
---- makefile	2023-04-29 21:29:34.137036327 +0100
-+++ makefile	2023-05-25 18:59:27.418785330 +0100
+diff --git a/makefile b/makefile
+index 6deb78e..d45448b 100644
+--- a/makefile
++++ b/makefile
 @@ -5,7 +5,6 @@
  
  NAME := userinfo-module.so
@@ -8,3 +10,4 @@
  INSTALL = install
  
  LIBS := gtk+-3.0 gmodule-export-2.0 accountsservice
+

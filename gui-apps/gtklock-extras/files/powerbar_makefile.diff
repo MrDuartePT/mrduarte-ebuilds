@@ -1,5 +1,7 @@
---- makefile	2023-04-29 21:29:24.867035802 +0100
-+++ makefile	2023-05-25 18:58:47.498587467 +0100
+diff --git a/makefile b/makefile
+index 1b95bb9..4609d21 100644
+--- a/makefile
++++ b/makefile
 @@ -5,7 +5,6 @@
  
  NAME := powerbar-module.so
