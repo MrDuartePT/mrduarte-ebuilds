@@ -52,19 +52,19 @@ src_install() {
     fi
 
     if use scratchpad; then
-	   pushd grimblast || die
+	   pushd scratchpad || die
 	   PREFIX="${D}/usr" emake install
 	   popd || die
     fi
     
     if use shellevents; then
-	   pushd grimblast || die
+	   pushd shellevents || die
 	   PREFIX="${D}/usr" emake install
 	   popd || die
     fi
     
     if use hyprprop; then
-	   pushd grimblast || die
+	   pushd hyprprop || die
 	   PREFIX="${D}/usr" emake install
 	   popd || die
     fi
