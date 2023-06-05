@@ -50,10 +50,9 @@ src_install() {
 		distutils-r1_src_install --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
 
 		# Desktop Files and Polkit
-		cd "${WORKDIR}/${P}/python/legion_linux/legion_linux"
 		domenu "${FILESDIR}/legion_gui.desktop"
-		doicon legion_logo.png
-		insinto "/usr/share/polkit-1/actions/" && doins legion_gui.policy
+		doicon "${WORKDIR}/${P}/python/legion_linux/legion_linux/legion_logo.png"
+		insinto "/usr/share/polkit-1/actions/" && doins "${FILESDIR}/legion_cli.policy"
 	fi
 }
 
