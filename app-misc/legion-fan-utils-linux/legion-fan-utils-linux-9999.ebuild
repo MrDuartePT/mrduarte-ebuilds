@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/Petingoso/legion-fan-utils-linux"
 DEPEND="sys-firmware/lenovolegionlinux
         dev-python/psutil
         radeon_dgpu? ( dev-util/rocm-smi )
-        downgrade-nvidia? ( x11-drivers/nvidia-drivers-525.116.04 )
+        downgrade-nvidia? ( <=x11-drivers/nvidia-drivers-525 )
         acpi? ( sys-power/acpid )
         app-portage/smart-live-rebuild
         ryzenadj? ( sys-power/RyzenAdj )"
