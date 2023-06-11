@@ -45,7 +45,9 @@ src_install() {
         systemd_dounit service/lenovo-fancurve.service service/lenovo-fancurve-restart.service service/lenovo-fancurve-restart.path
 
         if use acpi; then
-        insinto /etc/acpi/events/ && doins service/ac_adapter_legion-fancurve
+            insinto /etc/acpi/events/ && doins "${FILESDIR}/ac-adapter-legionfancurve"
+            insinto /etc/acpi/actions/ && doins "${FILESDIR}/battery-legion-quiet.sh"
+            fperms +x /etc/acpi/actions/battery-legion-quiet.sh
         fi
         
         systemd_enable_service now lenovo-fancurve.service

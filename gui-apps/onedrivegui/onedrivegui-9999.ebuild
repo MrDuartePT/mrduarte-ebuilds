@@ -21,9 +21,8 @@ SLOT="0"
 
 
 src_install() {
-    insinto /usr/local/bin/ && doins ${WORKDIR}/${P}/src/OneDriveGUI.py #Fix ui error on gentoo
+    newbin ${WORKDIR}/${P}/src/OneDriveGUI.py OneDriveGUI
     doicon ${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico
     domenu ${FILESDIR}/OneDriveGUI.desktop
-    newbin ${FILESDIR}/OneDriveGUI.sh OneDriveGUI
 }
 

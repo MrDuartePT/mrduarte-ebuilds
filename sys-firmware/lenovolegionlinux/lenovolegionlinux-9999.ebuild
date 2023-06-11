@@ -21,10 +21,11 @@ DEPEND="sys-kernel/linux-headers
         python? ( dev-python/PyQt5 )
         python? ( dev-python/pyyaml )
         python? ( dev-python/argcomplete )
-		app-portage/smart-live-rebuild"
+		app-portage/smart-live-rebuild
+		acpi? ( sys-power/acpid )"
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="python"
+IUSE="python acpi"
 
 MODULE_NAMES="legion-laptop(kernel/drivers/platform/x86:kernel_module)"
 BUILD_TARGETS="all"
@@ -48,6 +49,10 @@ src_install() {
 		#Define build dir (fix sandboxed)
 		cd "${WORKDIR}/${P}/python/legion_linux/"
 		distutils-r1_src_install --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
+
+		if use acpi; then
+            insinto /etc/acpi/events/ && doins "${FILESDIR}/novo-button"
+        fi
 
 		# Desktop Files and Polkit
 		domenu "${FILESDIR}/legion_gui.desktop"
