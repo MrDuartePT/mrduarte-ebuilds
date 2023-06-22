@@ -38,8 +38,7 @@ src_compile() {
 	local modlist=(
 		legion-laptop=kernel/drivers/platform/x86:kernel_module:kernel_module:all
 	)
-	BUILD_FIXES="KERNELVERSION=${KV_FULL}"
-    linux-mod-r1_src_compile
+    KERNELVERSION=${KV_FULL} linux-mod-r1_src_compile
 	if use python; then
 		#Define build dir (fix sandboxed)
 		cd "${WORKDIR}/${P}/python/legion_linux"
