@@ -68,18 +68,22 @@ src_install() {
         	systemd_dounit service/legion-linux.service service/legion-linux.path
 			dobin service/fancurve-set
 			insinto /usr/share/legion_linux && doins service/profiles/*
+			insinto /etc/legion_linux && doins service/profiles/*
 
 			#AMD
     		if use radeon-dgpu; then
         		insinto /usr/share/legion_linux && newins "${FILESDIR}/radeon" .env
+				insinto /etc/legion_linux && newins "${FILESDIR}/radeon" .env
     		fi
     		#NVIDIA (need dowgrade because nvidia-smi -pl was removed)
    			 if use downgrade-nvidia; then 
         		insinto /usr/share/legion_linux && newins "${FILESDIR}/nvidia" .env
+				insinto /etc/legion_linux && newins "${FILESDIR}/nvidia" .env
     		fi
 
 			if use ryzenadj; then 
         		insinto /usr/share/legion_linux && newins "${FILESDIR}/cpu" .env
+				insinto /etc/legion_linux && newins "${FILESDIR}/cpu" .env
     		fi
 
 			elog  "IMPORTANT!!!!\nPls copy /usr/share/legion_linux folder to .config in your Home folder\n Dont forget to edit .config/legion_linux/.env"
