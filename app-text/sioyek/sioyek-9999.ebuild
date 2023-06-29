@@ -25,12 +25,16 @@ src_prepare() {
     eqmake5 "CONFIG+=linux_app_image" pdf_viewer_build_config.pro
 }
 src_install() {
-    dobin sioyek
-    domenu resources/sioyek.desktop
+    #intall bin and shaders
+    insinto /opt/sioyek
+    doins sioyek
+    fperms +x /opt/sioyek/sioyek
+    insinto /opt/sioyek/shaders
+    doins pdf_viewer/shaders/*
+
+    domenu "${FILESDIR}/sioyek.desktop"
     doicon resources/sioyek-icon-linux.png
-    insinto /usr/share/sioyek && doins pdf_viewer/shaders/* && doins tutorial.pdf
-    insinto /etc/sioyek/ && doins pdf_viewer/keys.config && doins pdf_viewer/prefs.config
+    insinto /usr/share/sioyek && doins tutorial.pdf pdf_viewer/keys.config pdf_viewer/prefs.config
     doman resources/sioyek.1
 
 }
-
