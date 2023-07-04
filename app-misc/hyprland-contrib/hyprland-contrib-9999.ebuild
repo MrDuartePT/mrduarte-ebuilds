@@ -36,8 +36,7 @@ BDEPEND="
 		app-text/scdoc
 	)
 "
-DEPEND="${RDEPEND}
-        app-portage/smart-live-rebuild"
+DEPEND="${RDEPEND}"
 
 LICENSE="MIT"
 SLOT="0"
@@ -77,3 +76,8 @@ src_install() {
     
 }
 
+pkg_postinst() {
+	if use grimblast || use hyprprop || use scratchpad || use swap; then
+		optfeature "GUI notifications during dependency checks" x11-libs/libnotify
+	fi
+}

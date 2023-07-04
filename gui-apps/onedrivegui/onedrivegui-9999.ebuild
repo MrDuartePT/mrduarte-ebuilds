@@ -5,24 +5,27 @@ EAPI=7
 
 inherit git-r3
 inherit desktop
+
 EGIT_REPO_URI="https://github.com/bpozdena/OneDriveGUI.git"
 
-DESCRIPTION="Small Scripts that allow to change fan speed and GPU & CPU power limit on legion laptops"
+DESCRIPTION="A simple GUI for OneDrive Linux client, with multi-account support."
 HOMEPAGE="https://github.com/bpozdena/OneDriveGUI"
 
-#dlang repo net-misc/onedrive
+# Dependency on dev-lang/python is not necessary as it is provided by the Python eclass
 
-DEPEND="dev-lang/python
-        net-misc/onedrive
+DEPEND="net-misc/onedrive
         dev-python/requests
         dev-python/pyside6[webengine(+)]"
 LICENSE="GPL-3"
 SLOT="0"
 
-
 src_install() {
-    newbin ${WORKDIR}/${P}/src/OneDriveGUI.py OneDriveGUI
-    doicon ${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico
-    domenu ${FILESDIR}/OneDriveGUI.desktop
+    #Install binary and alias command
+    insinto /opt/OneDriveGUI/ && doins -r src/{resources,ui,OneDriveGUI.py}
+    insinto /opt/bin/ && doins "${FILESDIR}/onedrivegui"
+    fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/onedrivegui
+    
+    #Icon and Desktop File
+    doicon "${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico"
+    domenu "${FILESDIR}/OneDriveGUI.desktop"
 }
-

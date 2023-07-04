@@ -18,19 +18,18 @@ HOMEPAGE="https://github.com/johnfanv2/LenovoLegionLinux"
 DEPEND="sys-kernel/linux-headers
         sys-apps/lm-sensors
         sys-apps/dmidecode
-        python? ( dev-python/PyQt5 )
-        python? ( dev-python/pyyaml )
-        python? ( dev-python/argcomplete )
+        legion-tools? ( dev-python/PyQt5 )
+        legion-tools? ( dev-python/pyyaml )
+        legion-tools? ( dev-python/argcomplete )
 		app-portage/smart-live-rebuild
-		acpi? ( sys-power/acpid )
+		legion-acpi? ( sys-power/acpid )
 		radeon-dgpu? ( dev-util/rocm-smi )
         downgrade-nvidia? ( <=x11-drivers/nvidia-drivers-525 )
-        app-portage/smart-live-rebuild
         ryzenadj? ( sys-power/RyzenAdj )"
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="python acpi systemd radeon-dgpu downgrade-nvidia ryzenadj"
-REQUIRED_USE="|| ( systemd acpi radeon-dgpu downgrade-nvidia ryzenadj python ) radeon-dgpu? ( !downgrade-nvidia ) downgrade-nvidia? ( !radeon-dgpu )"
+IUSE="legion-tools legion-acpi systemd radeon-dgpu downgrade-nvidia ryzenadj"
+REQUIRED_USE="|| ( systemd legion-acpi radeon-dgpu downgrade-nvidia ryzenadj legion-tools ) legion-acpi? ( legion-tools ) radeon-dgpu? ( !downgrade-nvidia legion-tools ) downgrade-nvidia? ( !radeon-dgpu legion-tools )"
 
 MODULES_KERNEL_MIN=5.10
 
@@ -39,7 +38,7 @@ src_compile() {
 		legion-laptop=kernel/drivers/platform/x86:kernel_module:kernel_module:all
 	)
     KERNELVERSION=${KV_FULL} linux-mod-r1_src_compile
-	if use python; then
+	if use legion-tools; then
 		#Define build dir (fix sandboxed)
 		cd "${WORKDIR}/${P}/python/legion_linux"
 		distutils-r1_src_compile --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
@@ -51,14 +50,14 @@ src_install() {
 	#Load the module without reboot
 	cd "${WORKDIR}/${P}/python/legion_linux/"
 	make forcereloadmodule
-	if use python; then
+	if use legion-tools; then
 		#Define build dir (fix sandboxed)
 		cd "${WORKDIR}/${P}/python/legion_linux/"
 		distutils-r1_src_install --build-dir "${WORKDIR}/${P}/python/legion_linux/build"
 
 		cd "${WORKDIR}/${P}/extra"
 
-		if use acpi; then
+		if use legion-acpi; then
             insinto /etc/acpi/events/ && doins acpi/events/{ac_adapter_legion-fancurve,novo-button,PrtSc-button,fn-r-refrate}
 			insinto /etc/acpi/actions/ && doins acpi/actions/{battery-legion-quiet.sh,snipping-tool.sh,fn-r-refresh-rate.sh}
         fi
@@ -97,4 +96,3 @@ src_install() {
 
 	elog "INTEL USERS!!!!\nCPU Control Feature: On intel cpu install undervolt https://github.com/georgewhewell/undervolt (or other tool you like to use). More information read the readme https://github.com/Petingoso/legion-fan-utils-linux/blob/main/README.md"
 }
-
