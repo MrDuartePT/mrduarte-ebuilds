@@ -15,6 +15,8 @@ BDEPEND="media-libs/harfbuzz
     dev-qt/qtbase
     dev-qt/qt3d"
 
+KEYWORDS="~amd64~x86"
+
 src_prepare() {
     #Make Mupdf specific for build
     pushd mupdf || die

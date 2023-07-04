@@ -31,6 +31,8 @@ SLOT="0"
 IUSE="legion-tools legion-acpi systemd radeon-dgpu downgrade-nvidia ryzenadj"
 REQUIRED_USE="|| ( systemd legion-acpi radeon-dgpu downgrade-nvidia ryzenadj legion-tools ) legion-acpi? ( legion-tools ) radeon-dgpu? ( !downgrade-nvidia legion-tools ) downgrade-nvidia? ( !radeon-dgpu legion-tools )"
 
+KEYWORDS="~amd64~x86"
+
 MODULES_KERNEL_MIN=5.10
 
 src_compile() {

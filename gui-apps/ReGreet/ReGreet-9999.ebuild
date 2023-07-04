@@ -27,6 +27,8 @@ BDEPEND="
 IUSE="gtk4 logs cage sway"
 REQUIRED_USE="|| ( cage sway ) cage? ( !sway ) sway? ( !cage )"
 
+KEYWORDS="~amd64~x86"
+
 src_unpack() {
     git-r3_src_unpack 
     cargo_live_src_unpack

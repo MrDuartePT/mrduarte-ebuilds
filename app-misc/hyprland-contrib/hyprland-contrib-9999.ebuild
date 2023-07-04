@@ -43,6 +43,8 @@ SLOT="0"
 IUSE="grimblast scratchpad shellevents hyprprop swap"
 REQUIRED_USE="|| ( grimblast scratchpad shellevents hyprprop swap )"
 
+KEYWORDS="~amd64~x86"
+
 src_install() {
     if use grimblast; then
 	   pushd grimblast || die

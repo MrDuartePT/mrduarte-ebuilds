@@ -5,19 +5,19 @@ EAPI=7
 
 inherit git-r3
 inherit desktop
-
 EGIT_REPO_URI="https://github.com/bpozdena/OneDriveGUI.git"
 
 DESCRIPTION="A simple GUI for OneDrive Linux client, with multi-account support."
 HOMEPAGE="https://github.com/bpozdena/OneDriveGUI"
 
-# Dependency on dev-lang/python is not necessary as it is provided by the Python eclass
+#dlang repo net-misc/onedrive
 
 DEPEND="net-misc/onedrive
         dev-python/requests
         dev-python/pyside6[webengine(+)]"
 LICENSE="GPL-3"
 SLOT="0"
+
 
 src_install() {
     #Install binary and alias command
