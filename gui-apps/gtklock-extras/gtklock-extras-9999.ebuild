@@ -17,10 +17,10 @@ BDEPEND="x11-libs/gtk+
       virtual/pkgconfig
       playerctl? ( dev-go/act )
       playerctl? ( net-libs/libsoup )
-      userinfo? ( sys-apps/accountsservice )"
+      userinfo? ( sys-apps/accountsservice )
+"
 
-DEPEND="${RDEPEND}
-      app-portage/smart-live-rebuild"
+DEPEND="${RDEPEND}"
 
 IUSE="playerctl powerbar userinfo"
 REQUIRED_USE="|| ( playerctl powerbar userinfo )"

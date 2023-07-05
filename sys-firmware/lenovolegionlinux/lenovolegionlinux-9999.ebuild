@@ -25,7 +25,9 @@ DEPEND="sys-kernel/linux-headers
 		legion-acpi? ( sys-power/acpid )
 		radeon-dgpu? ( dev-util/rocm-smi )
         downgrade-nvidia? ( <=x11-drivers/nvidia-drivers-525 )
-        ryzenadj? ( sys-power/RyzenAdj )"
+        ryzenadj? ( sys-power/RyzenAdj )
+"
+
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="legion-tools legion-acpi systemd radeon-dgpu downgrade-nvidia ryzenadj"

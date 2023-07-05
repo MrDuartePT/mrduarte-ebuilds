@@ -16,7 +16,9 @@ DEPEND="x11-libs/gtk+:3
         gtk4? ( gui-libs/gtk )
         cage? ( gui-wm/cage )
         sway? ( gui-wm/sway )
-        || ( gui-wm/cage gui-wm/sway )"
+        || ( gui-wm/cage gui-wm/sway )
+"
+
 RDEPEND="
 	${DEPEND}
 	gui-libs/greetd
@@ -26,8 +28,6 @@ BDEPEND="
 "
 IUSE="gtk4 logs cage sway"
 REQUIRED_USE="|| ( cage sway ) cage? ( !sway ) sway? ( !cage )"
-
-KEYWORDS="~amd64~x86"
 
 src_unpack() {
     git-r3_src_unpack 
