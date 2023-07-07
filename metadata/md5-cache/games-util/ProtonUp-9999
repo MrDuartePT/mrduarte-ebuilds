@@ -1,0 +1,11 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=compile install unpack
+DESCRIPTION=Install and Update Proton-GE
+EAPI=8
+HOMEPAGE=https://github.com/AUNaseef/protonup
+INHERIT=git-r3
+LICENSE=GPL-3
+PROPERTIES=live
+SLOT=0
+_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=bccdef8bd8c00f33214be4b11e2af8d5

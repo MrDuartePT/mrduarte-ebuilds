@@ -4,11 +4,11 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{9..12} )
 
 EPYTHON=python3
 
-inherit linux-mod-r1 toolchain-funcs git-r3 distutils-r1 desktop systemd
+inherit linux-mod-r1 git-r3 distutils-r1 desktop systemd
 
 EGIT_REPO_URI="https://github.com/johnfanv2/LenovoLegionLinux.git"
 
