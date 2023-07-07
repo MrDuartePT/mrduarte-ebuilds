@@ -3,8 +3,7 @@
 
 EAPI=7
 
-inherit git-r3
-inherit desktop
+inherit git-r3 desktop
 EGIT_REPO_URI="https://github.com/bpozdena/OneDriveGUI.git"
 
 DESCRIPTION="A simple GUI for OneDrive Linux client, with multi-account support."
@@ -26,7 +25,7 @@ src_install() {
     insinto /opt/OneDriveGUI/ && doins -r "${WORKDIR}/${P}/src/resources" && doins -r "${WORKDIR}/${P}/src/ui" && doins -r "${WORKDIR}/${P}/src/OneDriveGUI.py"
     insinto /opt/bin/ && doins "${FILESDIR}/onedrivegui"
     fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/onedrivegui
-    
+
     #Icon and Desktop File
     doicon "${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico"
     domenu "${FILESDIR}/OneDriveGUI.desktop"
