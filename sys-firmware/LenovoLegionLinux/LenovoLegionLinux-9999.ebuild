@@ -99,9 +99,9 @@ pkg_postinst() {
 		ewarn "Pls copy that folder to /etc/legion_linux and edit the fancurves to your liking"
 		ewarn "Note:can be done using the gui app"
 		ewarn "Dont forget to edit /etc/legion_linux/.env to enable and disable extra features"
-		ewarn "Note: use flag downgrade-nvidia in need for nvidia TDP control"
+		ewarn "Note: use flag downgrade-nvidia in need for nvidia TDP control\n"
 	fi
-	ewarn "For Intel Users is need to install undervolt manally since and ebuild exist"
+	ewarn "For Intel Users is need to install undervolt manally since any ebuild exist"
 	ewarn "Undervolt Repo: https://github.com/georgewhewell/undervolt"
 	ewarn "More information on this README: https://github.com/Petingoso/legion-fan-utils-linux/blob/main/README.md"
 }
