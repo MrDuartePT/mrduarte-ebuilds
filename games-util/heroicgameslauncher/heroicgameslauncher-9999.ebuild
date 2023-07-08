@@ -14,15 +14,14 @@ SLOT="0"
 BDEPEND="sys-apps/yarn"
 
 src_compile() {
-    #Build linux binary
-    yarn dist:mac
+	#Build linux binary
+	yarn dist:mac
 }
 src_install() {
-    insinto /opt/Heroic-Game-Launcher
-    doins "${WORKDIR}/${P}/dist/linux-unpacked/*"
-    fperms +x /opt/Heroic-Game-Launcher/heroic
+	insinto /opt/Heroic-Game-Launcher
+	doins "${WORKDIR}/${P}/dist/linux-unpacked/*"
+	fperms +x /opt/Heroic-Game-Launcher/heroic
 
-    domenu "${WORKDIR}/${P}/sioyek.desktop"
-    newicon "${WORKDIR}/${P}/build/icon.png" heroic.png
-
+	domenu "${WORKDIR}/${P}/sioyek.desktop"
+	newicon "${WORKDIR}/${P}/build/icon.png" heroic.png
 }

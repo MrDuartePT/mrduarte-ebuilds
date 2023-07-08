@@ -12,21 +12,20 @@ HOMEPAGE="https://github.com/bpozdena/OneDriveGUI"
 #dlang repo net-misc/onedrive
 
 DEPEND="net-misc/onedrive
-        dev-python/requests
-        dev-python/pyside6[webengine(+)]
+	dev-python/requests
+	dev-python/pyside6[webengine(+)]
 "
 
 LICENSE="GPL-3"
 SLOT="0"
 
-
 src_install() {
-    #Install binary and alias command
-    insinto /opt/OneDriveGUI/ && doins -r "${WORKDIR}/${P}/src/resources" && doins -r "${WORKDIR}/${P}/src/ui" && doins -r "${WORKDIR}/${P}/src/OneDriveGUI.py"
-    insinto /opt/bin/ && doins "${FILESDIR}/onedrivegui"
-    fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/onedrivegui
+	#Install binary and alias command
+	insinto /opt/OneDriveGUI/ && doins -r "${WORKDIR}/${P}/src/resources" && doins -r "${WORKDIR}/${P}/src/ui" && doins -r "${WORKDIR}/${P}/src/OneDriveGUI.py"
+	insinto /opt/bin/ && doins "${FILESDIR}/onedrivegui"
+	fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/onedrivegui
 
-    #Icon and Desktop File
-    doicon "${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico"
-    domenu "${FILESDIR}/OneDriveGUI.desktop"
+	#Icon and Desktop File
+	doicon "${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico"
+	domenu "${FILESDIR}/OneDriveGUI.desktop"
 }
