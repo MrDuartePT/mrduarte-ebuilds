@@ -22,8 +22,8 @@ SLOT="0"
 src_install() {
 	#Install binary and alias command
 	insinto /opt/OneDriveGUI/ && doins -r "${WORKDIR}/${P}/src/resources" && doins -r "${WORKDIR}/${P}/src/ui" && doins -r "${WORKDIR}/${P}/src/OneDriveGUI.py"
-	insinto /opt/bin/ && doins "${FILESDIR}/onedrivegui"
-	fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/onedrivegui
+	insinto /opt/bin/ && doins "${FILESDIR}/OneDriveGUI"
+	fperms +x /opt/OneDriveGUI/OneDriveGUI.py /opt/bin/OneDriveGUI
 
 	#Icon and Desktop File
 	doicon "${WORKDIR}/${P}/src/resources/images/OneDriveGUI.ico"
