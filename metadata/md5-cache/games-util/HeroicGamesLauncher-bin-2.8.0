@@ -8,4 +8,4 @@ LICENSE=GPL-3
 SLOT=0
 SRC_URI=https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/releases/download/v2.8.0/heroic-2.8.0.tar.xz
 _eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d
-_md5_=cc454eb84634705462620424bc186642
+_md5_=f67acc3c23726e0ca6e220d5b9f2703c
