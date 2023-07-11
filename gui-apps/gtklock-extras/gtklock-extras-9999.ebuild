@@ -17,6 +17,7 @@ BDEPEND="x11-libs/gtk+
 	virtual/pkgconfig
 	playerctl? ( dev-go/act )
 	playerctl? ( net-libs/libsoup )
+	playerctl? ( media-sound/playerctl )
 	userinfo? ( sys-apps/accountsservice )
 "
 
