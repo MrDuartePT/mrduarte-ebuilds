@@ -16,6 +16,8 @@ SLOT="0"
 IUSE="binutils X wayland pipewire pulseaudio gnome"
 REQUIRED_USE="|| ( binutils X wayland pipewire pulseaudio ) pipewire? ( !pulseaudio ) pulseaudio? ( !pipewire ) "
 
+KEYWORDS="~amd64"
+
 RDEPEND="dev-libs/libconfig
 	dev-libs/nettle
 	media-libs/freetype
