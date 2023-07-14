@@ -11,8 +11,9 @@ HOMEPAGE="https://looking-glass.io https://github.com/gnif/LookingGlass"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="binutils X wayland pipewire pulseaudio gnome"
-REQUIRED_USE="|| ( binutils X wayland pipewire pulseaudio ) pipewire? ( !pulseaudio ) pulseaudio? ( !pipewire ) "
+IUSE="binutils gnome pipewire pulseaudio wayland X"
+USE="pipewire pulseaudio"
+REQUIRED_USE="|| ( binutils gnome pipewire pulseaudio wayland X ) pipewire? ( !pulseaudio ) pulseaudio? ( !pipewire ) "
 
 RDEPEND="dev-libs/libconfig
 	dev-libs/nettle
@@ -38,41 +39,24 @@ BDEPEND="virtual/pkgconfig"
 
 CMAKE_USE_DIR="${S}"/client
 
-src_prepare() {
+src_prepare () {
 	default
 
 	# Base on build.rst from the project
-	# https://github.com/gnif/LookingGlass/blob/master/doc/build.rst
-
-	if ! use binutils; then
-		MYCMAKEARGS=" -DENABLE_BACKTRACE=no "
-	fi
-
-	if ! use X; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_X11=no "
-	fi
-
-	if ! use wayland; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_WAYLAND=no "
-	fi
-
-	if ! use pipewire; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_PIPEWIRE=no "
-	fi
-
-	if ! use pulseaudio; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_PULSEAUDIO=no "
-	fi
-
-	if ! use pulseaudio; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_PULSEAUDIO=no "
-	fi
-
-	if use gnome && use wayland; then
-		MYCMAKEARGS=" ${MYCMAKEARGS} -DENABLE_LIBDECOR=ON "
-	fi
+	# doc/build.rst
+	MYCMAKEARGS=( 
+		-DENABLE_BACKTRACE=$(usex binutils) \ 
+		-DENABLE_X11=$(usex X) -DENABLE_WAYLAND=$(usex wayland) \ 
+		-DENABLE_PIPEWIRE=$(usex pipewire) \
+		-DENABLE_PULSEAUDIO=$(usex pulseaudio) \
+		-DENABLE_LIBDECOR=$(usex gnome) 
+	)
 
 	cmake_src_prepare
+}
+
+src_compile() {
+	cmake_src_compile
 }
 
 src_install() {
@@ -86,10 +70,22 @@ src_install() {
 
 	if use X && use wayland; then
 		domenu "${FILESDIR}/LookingGlass-X.desktop"
-		domenu "${FILESDIR}/LookingGlass-Wayland.desktop"
+		newmenu "${FILESDIR}/LookingGlass.desktop" LookingGlass-Wayland.desktop
 	fi
 }
 
 pkg_postinst() {
 	xdg_icon_cache_update
+	if use X && ! use wayland || ! use X && use wayland; then
+		ewarn "The desktop file located located at /usr/share/applications/LookingGlass.desktop"
+	fi
+	if use X && use wayland; then
+		ewarn "The desktop files located located at /usr/share/applications/LookingGlass-X.desktop /usr/share/applications/LookingGlass-Wayland.desktop"
+	fi
+	ewarn "Use the Right Control (Control_R) as the modifier key to control the action in LookingGlass"
+	ewarn "Note: Key was change because my laptop dosent have ScrLk"
+	ewarn "Tip: If you press and hold the modfier key (Control_R) you get all the key shortcuts for all action"
+	ewarn ""
+	ewarn "Note: The modifier key can be change by editing the desktop file"
+	ewarn "More information on this link: https://looking-glass.io/wiki/Client/Keyboard_shortcuts"
 }
