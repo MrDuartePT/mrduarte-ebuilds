@@ -4,6 +4,7 @@
 EAPI=8
 
 M_PV="B6"
+S="${WORKDIR}/${PN}-${M_PV}"
 
 inherit cmake desktop xdg-utils
 
