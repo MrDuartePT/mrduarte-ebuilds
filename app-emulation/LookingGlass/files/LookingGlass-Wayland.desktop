@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=LookingGlass Client (Wayland)
+StartupNotify=true
+Exec=env QT_QPA_PLATFORM=wayland /usr/bin/looking-glass-client
+Terminal=false
+Icon=looking-glass-client
+Type=Application

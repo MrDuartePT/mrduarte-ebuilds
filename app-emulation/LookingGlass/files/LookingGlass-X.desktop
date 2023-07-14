@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=LookingGlass Client (X11/XWayland)
+StartupNotify=true
+Exec=env QT_QPA_PLATFORM=xcb /usr/bin/looking-glass-client
+Terminal=false
+Icon=looking-glass-client
+Type=Application
