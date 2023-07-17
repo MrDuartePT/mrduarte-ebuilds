@@ -1,0 +1,12 @@
+DEFINED_PHASES=install prepare unpack
+DEPEND=app-emulation/86Box dev-dotnet/dotnet-sdk-bin
+DESCRIPTION=A (cross-platform) configuration manager for the 86Box emulator
+EAPI=7
+HOMEPAGE=https://github.com/RetBox/86BoxManagerX
+INHERIT=desktop
+KEYWORDS=~amd64
+LICENSE=MIT
+SLOT=0
+SRC_URI=https://github.com/RetBox/86BoxManagerX/archive/refs/tags/v1.7.6.0e.tar.gz -> 86BoxManagerX-1.7.6.0.tar.gz
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d
+_md5_=3b438f7e8a32b828eacc06bb57a0945b

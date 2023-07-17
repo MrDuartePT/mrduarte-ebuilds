@@ -1,0 +1,12 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=compile install unpack
+DEPEND=app-emulation/86Box dev-dotnet/dotnet-sdk-bin
+DESCRIPTION=A (cross-platform) configuration manager for the 86Box emulator
+EAPI=7
+HOMEPAGE=https://github.com/RetBox/86BoxManagerX
+INHERIT=desktop git-r3
+LICENSE=MIT
+PROPERTIES=live
+SLOT=0
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	git-r3	27e13c09a4c7e4c78ac812f74727e676
+_md5_=5f6c29ffb1551d6f64e666148ce8f40b
