@@ -12,5 +12,5 @@ PROPERTIES=live
 RDEPEND=app-shells/bash gui-wm/hyprland grimblast? ( gui-apps/wl-clipboard gui-apps/grim gui-apps/slurp app-misc/jq ) hyprprop? ( app-misc/jq gui-apps/slurp ) scratchpad? ( sys-apps/sed gui-apps/slurp app-misc/jq )
 REQUIRED_USE=|| ( grimblast scratchpad shellevents hyprprop swap )
 SLOT=0
-_eclasses_=git-r3	27e13c09a4c7e4c78ac812f74727e676
+_eclasses_=git-r3	97f7f638070d17e4c2b6542589bb4575
 _md5_=e435008e1fe1658c4a024f5b51f8a16e

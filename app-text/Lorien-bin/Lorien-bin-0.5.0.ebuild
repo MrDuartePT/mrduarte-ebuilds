@@ -19,7 +19,7 @@ src_install() {
 	#Copy Manual & Make a copy of the folder
 	cp "${FILESDIR}/manual_v${PV}.md" "${S}/manual_v${PV}.md"
 	cp -r "${S}" "${WORKDIR}/Lorien"
-	
+
 	#Install in /opt
 	insinto /opt
 	doins -r "${WORKDIR}/Lorien"

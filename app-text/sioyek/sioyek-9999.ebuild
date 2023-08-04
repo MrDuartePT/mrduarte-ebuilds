@@ -11,8 +11,8 @@ HOMEPAGE="https://github.com/ahrm/sioyek"
 LICENSE="GPL-3"
 SLOT="0"
 
-BDEPEND="media-libs/harfbuzz 
-	dev-qt/qtbase 
+BDEPEND="media-libs/harfbuzz
+	dev-qt/qtbase
 	dev-qt/qt3d
 "
 

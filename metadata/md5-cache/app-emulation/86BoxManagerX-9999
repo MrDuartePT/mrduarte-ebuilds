@@ -8,5 +8,5 @@ INHERIT=desktop git-r3
 LICENSE=MIT
 PROPERTIES=live
 SLOT=0
-_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	git-r3	27e13c09a4c7e4c78ac812f74727e676
-_md5_=5f6c29ffb1551d6f64e666148ce8f40b
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	git-r3	2358a7b20091609e24bd3a83b3ac5991
+_md5_=46c20f66def092f89ee1fd1ea67657ab

@@ -1,0 +1,15 @@
+BDEPEND=app-pda/libimobiledevice [static-libs] dev-libs/openssl >=virtual/rust-1.53
+DEFINED_PHASES=compile configure install test unpack
+DEPEND=app-pda/libusbmuxd [static-libs]
+DESCRIPTION=An alternative to usbmuxd just for networking
+EAPI=8
+HOMEPAGE=https://github.com/jkcoxson/netmuxd
+INHERIT=cargo
+IUSE=debug
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL-2
+RDEPEND=app-pda/libusbmuxd [static-libs]
+SLOT=0
+SRC_URI=https://github.com/jkcoxson/netmuxd/archive/refs/tags/v0.1.4.tar.gz -> netmuxd-0.1.4.tar.gz
+_eclasses_=toolchain-funcs	8e3fb781f3258ae2757d1dfc2c7c170e	multilib	c19072c3cd7ac5cb21de013f7e9832e0	flag-o-matic	ad475baa777c9978fa035216c8264a10	multiprocessing	b4e253ab22cef7b1085e9b67c7a3b730	cargo	8520ae1bed0e6965d027399b471a3595
+_md5_=c9e87a4d1be012303d1ef121f11d4550

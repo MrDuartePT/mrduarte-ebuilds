@@ -26,16 +26,10 @@ src_compile () {
 }
 
 src_install() {
-	#Create files
-	touch "${WORKDIR}/${P}/86BoxManagerX/86box.cfg" "${WORKDIR}/${P}/86BoxManagerX/86Box.json" "${WORKDIR}/${P}/86BoxManagerX/86BoxVMs.json"
-
 	#Install binary and alias command
 	insinto /opt && doins -r "${WORKDIR}/${P}/86BoxManagerX"
 	insinto /opt/bin/ && doins "${FILESDIR}/86BoxManagerX"
-
-	#Fix permissions
-	fperms +x /opt/86BoxManagerX/86Manager /opt/bin/86BoxManagerX
-	fperms a=+rw /opt/86BoxManagerX/86box.cfg /opt/86BoxManagerX/86Box.json /opt/86BoxManagerX/86BoxVMs.json
+	fperms +x /opt/86BoxManagerX/86Manager /opt/bin/86BoxManagerX /opt/86BoxManagerX/*.dll
 
 	#Icon and Desktop File
 	doicon "${FILESDIR}/86BoxManagerX.png"
