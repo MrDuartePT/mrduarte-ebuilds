@@ -6,7 +6,7 @@ EAPI=8
 inherit git-r3
 EGIT_REPO_URI="https://github.com/MrDuartePT/deckifier-hyprland.git"
 DESCRIPTION="Steam Deck UI - On Hyprland compositor"
-HOMEPAGE="https://github.com/MrDuartePT/deckifier-hyprland.git"
+HOMEPAGE="https://github.com/MrDuartePT/deckifier-hyprland"
 
 LICENSE="MIT"
 SLOT="0"
