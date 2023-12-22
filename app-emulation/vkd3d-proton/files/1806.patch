@@ -1,0 +1,72 @@
+From 396dd6a054f1a9c1ac35a88a4c522fcd8ef7696b Mon Sep 17 00:00:00 2001
+From: Philip Rebohle <philip.rebohle@tu-dortmund.de>
+Date: Thu, 7 Dec 2023 18:24:00 +0100
+Subject: [PATCH] vkd3d: Enable storage image usage for potential resolve
+ destinations.
+
+This allows multisample resolves to be performed on resources which
+do not support render target usage.
+
+Signed-off-by: Philip Rebohle <philip.rebohle@tu-dortmund.de>
+---
+ libs/vkd3d/command.c       |  2 +-
+ libs/vkd3d/resource.c      | 13 +++++++++++++
+ libs/vkd3d/vkd3d_private.h |  1 +
+ 3 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/libs/vkd3d/command.c b/libs/vkd3d/command.c
+index 65bfe41dc5..bcf1a06a39 100644
+--- a/libs/vkd3d/command.c
++++ b/libs/vkd3d/command.c
+@@ -8464,7 +8464,7 @@ enum vkd3d_resolve_image_path d3d12_command_list_select_resolve_path(struct d3d1
+         }
+     }
+ 
+-    if (dst_resource->desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS)
++    if (dst_resource->flags & VKD3D_RESOURCE_STORAGE_IMAGE)
+     {
+         /* Use the compute path if we need to use a pipeline anyway, or if
+          * the destination image does not support render target usage. */
+diff --git a/libs/vkd3d/resource.c b/libs/vkd3d/resource.c
+index 6c9a0057da..9847a623a9 100644
+--- a/libs/vkd3d/resource.c
++++ b/libs/vkd3d/resource.c
+@@ -774,6 +774,16 @@ static HRESULT vkd3d_get_image_create_info(struct d3d12_device *device,
+     if (!(desc->Flags & D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE) || desc->SampleDesc.Count > 1)
+         image_info->usage |= VK_IMAGE_USAGE_SAMPLED_BIT;
+ 
++    /* Add storage image usage if the image cannot be rendered to, but may
++     * be used as a destination image for multisample resolves. */
++    if (desc->Dimension == D3D12_RESOURCE_DIMENSION_TEXTURE2D && desc->SampleDesc.Count == 1 &&
++            !(image_info->usage & VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) &&
++            (format->vk_aspect_mask == VK_IMAGE_ASPECT_COLOR_BIT) &&
++            (format->vk_format_features & VK_FORMAT_FEATURE_2_COLOR_ATTACHMENT_BIT) &&
++            (format->vk_format_features & VK_FORMAT_FEATURE_2_STORAGE_IMAGE_BIT) &&
++            (!heap_properties || !is_cpu_accessible_heap(heap_properties)))
++        image_info->usage |= VK_IMAGE_USAGE_STORAGE_BIT;
++
+     /* Additional usage flags for shader-based copies */
+     if (vkd3d_format_allows_shader_copies(format->dxgi_format))
+     {
+@@ -873,6 +883,9 @@ static HRESULT vkd3d_get_image_create_info(struct d3d12_device *device,
+         {
+             resource->common_layout = vk_common_image_layout_from_d3d12_desc(device, desc);
+         }
++
++        if (image_info->usage & VK_IMAGE_USAGE_STORAGE_BIT)
++            resource->flags |= VKD3D_RESOURCE_STORAGE_IMAGE;
+     }
+ 
+     return S_OK;
+diff --git a/libs/vkd3d/vkd3d_private.h b/libs/vkd3d/vkd3d_private.h
+index 24c351812b..e31ba50fb1 100644
+--- a/libs/vkd3d/vkd3d_private.h
++++ b/libs/vkd3d/vkd3d_private.h
+@@ -877,6 +877,7 @@ enum vkd3d_resource_flag
+     VKD3D_RESOURCE_EXTERNAL               = (1u << 5),
+     VKD3D_RESOURCE_ACCELERATION_STRUCTURE = (1u << 6),
+     VKD3D_RESOURCE_GENERAL_LAYOUT         = (1u << 7),
++    VKD3D_RESOURCE_STORAGE_IMAGE          = (1u << 8),
+ };
+ 
+ struct d3d12_sparse_image_region
