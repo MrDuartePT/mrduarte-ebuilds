@@ -10,7 +10,7 @@ inherit prefix python-any-r1 toolchain-funcs wrapper
 
 WINE_GECKO=2.47.4
 WINE_MONO=8.1.0
-M_PV=9.0-rc2
+M_PV=9.0-rc5
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -432,7 +432,7 @@ src_install() {
 		fi
 	fi
 
-	dodoc ANNOUNCE AUTHORS README* documentation/README*
+	dodoc ANNOUNCE* AUTHORS README* documentation/README*
 }
 
 pkg_postinst() {
