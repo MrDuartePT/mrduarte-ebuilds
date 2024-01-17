@@ -10,7 +10,7 @@ inherit prefix python-any-r1 toolchain-funcs wrapper
 
 WINE_GECKO=2.47.4
 WINE_MONO=8.1.0
-M_PV=9.0-rc4
+WINE_P=wine-$(ver_cut 1-2)
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -19,16 +19,17 @@ if [[ ${PV} == *9999 ]]; then
 else
 	(( $(ver_cut 2) )) && WINE_SDIR=$(ver_cut 1).x || WINE_SDIR=$(ver_cut 1).0
 	SRC_URI="
-		https://dl.winehq.org/wine/source/${WINE_SDIR}/wine-${M_PV}.tar.xz
-		https://github.com/wine-staging/wine-staging/archive/v${M_PV}.tar.gz -> wine-${M_PV}.tar.gz"
+		https://dl.winehq.org/wine/source/${WINE_SDIR}/${WINE_P}.tar.xz
+		https://github.com/wine-staging/wine-staging/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="-* ~amd64 ~x86"
 fi
-S="${WORKDIR}/wine-${M_PV}"
+S="${WORKDIR}/${WINE_P}"
 
 DESCRIPTION="Free implementation of Windows(tm) on Unix, with Wine-Staging patchset"
 HOMEPAGE="
 	https://wiki.winehq.org/Wine-Staging
-	https://gitlab.winehq.org/wine/wine-staging/"
+	https://gitlab.winehq.org/wine/wine-staging/
+"
 
 LICENSE="LGPL-2.1+ BSD-2 IJG MIT OPENLDAP ZLIB gsm libpng2 libtiff"
 SLOT="${PV}"
@@ -38,13 +39,15 @@ IUSE="
 	kerberos +mingw +mono netapi nls opencl +opengl osmesa pcap perl
 	pulseaudio samba scanner +sdl selinux smartcard +ssl +strip
 	+truetype udev udisks +unwind usb v4l +vulkan wayland wow64
-	+xcomposite xinerama"
+	+xcomposite xinerama
+"
 # bug #551124 for truetype
 # TODO: wow64 can be done without mingw if using clang (needs bug #912237)
 REQUIRED_USE="
 	X? ( truetype )
 	crossdev-mingw? ( mingw )
-	wow64? ( abi_x86_64 !abi_x86_32 mingw )"
+	wow64? ( abi_x86_64 !abi_x86_32 mingw )
+"
 
 # tests are non-trivial to run, can hang easily, don't play well with
 # sandbox, and several need real opengl/vulkan or network access
@@ -75,7 +78,8 @@ WINE_DLOPEN_DEPEND="
 	truetype? ( media-libs/freetype[${MULTILIB_USEDEP}] )
 	udisks? ( sys-apps/dbus[${MULTILIB_USEDEP}] )
 	v4l? ( media-libs/libv4l[${MULTILIB_USEDEP}] )
-	vulkan? ( media-libs/vulkan-loader[${MULTILIB_USEDEP}] )"
+	vulkan? ( media-libs/vulkan-loader[${MULTILIB_USEDEP}] )
+"
 WINE_COMMON_DEPEND="
 	${WINE_DLOPEN_DEPEND}
 	X? (
@@ -104,7 +108,8 @@ WINE_COMMON_DEPEND="
 	wayland? (
 		dev-libs/wayland[${MULTILIB_USEDEP}]
 		x11-libs/libxkbcommon[${MULTILIB_USEDEP}]
-	)"
+	)
+"
 RDEPEND="
 	${WINE_COMMON_DEPEND}
 	app-emulation/wine-desktop-common
@@ -126,11 +131,13 @@ RDEPEND="
 	)
 	samba? ( net-fs/samba[winbind] )
 	selinux? ( sec-policy/selinux-wine )
-	udisks? ( sys-fs/udisks:2 )"
+	udisks? ( sys-fs/udisks:2 )
+"
 DEPEND="
 	${WINE_COMMON_DEPEND}
 	sys-kernel/linux-headers
-	X? ( x11-base/xorg-proto )"
+	X? ( x11-base/xorg-proto )
+"
 # gitapply.sh prefers git but can fallback to patch+extras
 BDEPEND="
 	${PYTHON_DEPS}
@@ -154,7 +161,8 @@ BDEPEND="
 		wow64? ( dev-util/mingw64-toolchain[abi_x86_32] )
 	) )
 	nls? ( sys-devel/gettext )
-	wayland? ( dev-util/wayland-scanner )"
+	wayland? ( dev-util/wayland-scanner )
+"
 IDEPEND=">=app-eselect/eselect-wine-2"
 
 QA_CONFIG_IMPL_DECL_SKIP=(
@@ -216,10 +224,15 @@ src_prepare() {
 	local patchinstallargs=(
 		--all
 		--no-autoconf
+		# patches known broken with USE=-mingw, retry occasionally (bug #921360)
+		$(usev !mingw '
+			-W winedevice-Default_Drivers
+			-W fltmgr.sys-FltBuildDefaultSecurityDescriptor
+		')
 		${MY_WINE_STAGING_CONF}
 	)
 
-	edo "${PYTHON}" ../${PN}-${M_PV}/staging/patchinstall.py "${patchinstallargs[@]}"
+	edo "${PYTHON}" ../${P}/staging/patchinstall.py "${patchinstallargs[@]}"
 
 	# sanity check, bumping these has a history of oversights
 	local geckomono=$(sed -En '/^#define (GECKO|MONO)_VER/{s/[^0-9.]//gp}' \
@@ -257,7 +270,7 @@ src_prepare() {
 	# always update for patches (including user's wrt #432348)
 	eautoreconf
 	tools/make_requests || die # perl
-    tools/make_specfiles || die # fix linker
+  	tools/make_specfiles || die # fix linker
 }
 
 src_configure() {
