@@ -22,29 +22,26 @@ src_install() {
 	doins -r "${S}/rootfs/etc/greetd"
 	doins -r "${S}/rootfs/etc/polkit-1"
 	insinto "usr/"
+	doins -r "${S}/rootfs/usr/bin"
 	doins -r "${S}/rootfs/usr/lib"
 	doins -r "${S}/rootfs/usr/share"
 
-	#File inside /rootfs/usr/bin
-	dobin "${S}/rootfs/usr/bin/export-gpu"
-	dobin "${S}/rootfs/usr/bin/gamescope-session"
-	dobin "${S}/rootfs/usr/bin/steamos-session-select"
-	dobin "${S}/rootfs/usr/bin/steam-http-loader"
-	dobin "${S}/rootfs/usr/bin/jupiter-biosupdate"
-	dobin "${S}/rootfs/usr/bin/steamos-update"
+	fperms +x "/usr/lib/os-session-select"
+	fperms +x "/usr/bin/export-gpu"
+	fperms +x "/usr/bin/gamescope-session"
+	fperms +x "/usr/bin/steamos-session-select"
+	fperms +x "/usr/bin/steam-http-loader"
+	fperms +x "/usr/bin/jupiter-biosupdate"
+	fperms +x "/usr/bin/steamos-update"
 
-	#File inside /rootfs/usr/bin/steamos-polkit-helpers
-	insinto "usr/libexec/"
-	doins -r "${S}/rootfs/usr/libexec/steamos-polkit-helpers"
+	fperms +x "/usr/share/gamescope-session/gamescope-session-script"
+	fperms +x "/usr/bin/steamos-polkit-helpers/jupiter-biosupdate"
+	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-update"
+	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-set-hostname"
+	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-set-timezone"
+	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-priv-write"
 
 	fperms a+x "/usr/share/applications/org.valve.gamescope.desktop"
-	fperms +x "/usr/lib/os-session-select"
-	fperms +x "/usr/share/gamescope-session/gamescope-session-script"
-	fperms +x "/usr/libexec/steamos-polkit-helpers/jupiter-biosupdate"
-	fperms +x "/usr/libexec/steamos-polkit-helpers/steamos-update"
-	fperms +x "/usr/libexec/steamos-polkit-helpers/steamos-set-hostname"
-	fperms +x "/usr/libexec/steamos-polkit-helpers/steamos-set-timezone"
-	fperms +x "/usr/libexec/steamos-polkit-helpers/steamos-priv-write"
 }
 
 post_intall() {
