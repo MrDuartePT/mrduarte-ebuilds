@@ -5,6 +5,7 @@ EAPI=8
 
 inherit git-r3 xdg-utils
 EGIT_REPO_URI="https://github.com/MrDuartePT/deckifier-hyprland.git"
+EGIT_BRANCH="hyprland"
 DESCRIPTION="Steam Deck UI - On Hyprland compositor"
 HOMEPAGE="https://github.com/MrDuartePT/deckifier-hyprland"
 
@@ -19,7 +20,6 @@ RDEPEND="gui-wm/gamescope
 src_install() {
 	insinto "etc/"
 	doins -r "${S}/rootfs/etc/systemd"
-	doins -r "${S}/rootfs/etc/greetd"
 	doins -r "${S}/rootfs/etc/polkit-1"
 	insinto "usr/"
 	doins -r "${S}/rootfs/usr/bin"
