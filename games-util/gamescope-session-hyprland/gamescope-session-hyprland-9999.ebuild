@@ -15,6 +15,7 @@ SLOT="0"
 RDEPEND="gui-wm/gamescope
 	games-util/steam-client-meta
 	games-util/mangohud
+	dev-python/python-evdev
 "
 
 src_install() {
@@ -30,6 +31,7 @@ src_install() {
 	fperms +x "/usr/bin/export-gpu"
 	fperms +x "/usr/bin/gamescope-session"
 	fperms +x "/usr/bin/steamos-session-select"
+	fperms +x "/usr/bin/steam-powerbuttond"
 
 	fperms +x "/usr/share/gamescope-session/gamescope-session-script"
 
