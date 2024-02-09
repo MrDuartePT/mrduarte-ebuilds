@@ -6,8 +6,7 @@ EAPI=8
 inherit fcaps meson
 
 RESHADE_COMMIT="9fdbea6892f9959fdc18095d035976c574b268b7"
-MY_PV=$(ver_rs 3 -)
-MY_PV="${MY_PV//_/-}"
+MY_PV="3.13.16.4-plus3"
 
 DESCRIPTION="Efficient micro-compositor for running games"
 HOMEPAGE="https://github.com/ValveSoftware/gamescope"
