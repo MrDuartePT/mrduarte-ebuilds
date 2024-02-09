@@ -30,16 +30,8 @@ src_install() {
 	fperms +x "/usr/bin/export-gpu"
 	fperms +x "/usr/bin/gamescope-session"
 	fperms +x "/usr/bin/steamos-session-select"
-	fperms +x "/usr/bin/steam-http-loader"
-	fperms +x "/usr/bin/jupiter-biosupdate"
-	fperms +x "/usr/bin/steamos-update"
 
 	fperms +x "/usr/share/gamescope-session/gamescope-session-script"
-	fperms +x "/usr/bin/steamos-polkit-helpers/jupiter-biosupdate"
-	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-update"
-	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-set-hostname"
-	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-set-timezone"
-	fperms +x "/usr/bin/steamos-polkit-helpers/steamos-priv-write"
 
 	fperms a+x "/usr/share/applications/org.valve.gamescope.desktop"
 }
