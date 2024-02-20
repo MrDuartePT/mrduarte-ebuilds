@@ -15,7 +15,7 @@ SLOT="0"
 RDEPEND="gui-wm/gamescope
 	games-util/steam-client-meta
 	games-util/mangohud
-	dev-python/python-evdev
+	dev-python/evdev
 "
 
 src_install() {
