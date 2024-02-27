@@ -18,8 +18,8 @@ if [[ ${PV} == *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/ValveSoftware/wine.git"
 	EGIT_BRANCH="bleeding-edge"
 else
-	SRC_URI="https://github.com/ValveSoftware/wine/archive/refs/tags/proton-wine-${WINE_PV}.tar.gz"
-	S="${WORKDIR}/${M_PN}-wine-${WINE_PV}"
+	SRC_URI="https://github.com/ValveSoftware/wine/archive/refs/tags/experimental-wine-bleeding-edge-8.0-80579-20240215-p002645-w191c4e-dab3593-ve64116.tar.gz"
+	S="${WORKDIR}/wine-experimental-wine-bleeding-edge-8.0-80579-20240215-p002645-w191c4e-dab3593-ve64116"
 	KEYWORDS="-* ~amd64 ~x86"
 fi
 
@@ -125,7 +125,7 @@ PATCHES=(
 	"${FILESDIR}"/${M_PN}-7.0.4-noexecstack.patch
 	"${FILESDIR}"/${M_PN}-8.0.1c-unwind.patch
 	"${FILESDIR}"/${M_PN}-8.0.4-restore-menubuilder.patch
-	"${FILESDIR}"/${M_PN}-9999-hags-spoof.patch
+	"${FILESDIR}"/${M_PN}-8.0.80579-hags-spoof.patch
 )
 
 pkg_pretend() {
