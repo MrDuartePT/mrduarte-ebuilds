@@ -28,11 +28,6 @@ BDEPEND="
 	dev-util/glslang
 	!crossdev-mingw? ( dev-util/mingw64-toolchain[${MULTILIB_USEDEP}] )"
 
-PATCHES=(
-	"${FILESDIR}/147.patch"
-	"${FILESDIR}/${PN}-reflex-omm.diff"
-)
-
 pkg_pretend() {
 	[[ ${MERGE_TYPE} == binary ]] && return
 
