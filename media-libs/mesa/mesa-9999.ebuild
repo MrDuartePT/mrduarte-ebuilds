@@ -3,16 +3,16 @@
 
 EAPI=8
 
-LLVM_COMPAT=( {15..18} )
+LLVM_COMPAT=( {15..17} )
 LLVM_OPTIONAL=1
 PYTHON_COMPAT=( python3_{10..12} )
 
 inherit llvm-r1 meson-multilib python-any-r1 linux-info rust-toolchain
 
 MY_P="${P/_/-}"
-syn_PV=2.0.48
-proc_macro2_PV=1.0.78
-quote_PV=1.0.35
+syn_PV=2.0.39
+proc_macro2_PV=1.0.70
+quote_PV=1.0.33
 unicode_ident_PV=1.0.12
 
 NAK_URI="
@@ -27,6 +27,7 @@ HOMEPAGE="https://www.mesa3d.org/ https://mesa.freedesktop.org/"
 
 if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://gitlab.freedesktop.org/mesa/mesa.git"
+	SRC_URI="${NAK_URI}"
 	inherit git-r3
 else
 	SRC_URI="
@@ -178,6 +179,19 @@ x86? (
 	usr/lib/libGLX_mesa.so.0.0.0
 )"
 
+src_unpack() {
+	# Unpack even on live ebuilds
+	if [[ ${PV} == 9999 ]]; then
+		git-r3_src_unpack
+		unpack syn-${syn_PV}.tar.gz
+		unpack proc-macro2-${proc_macro2_PV}.tar.gz
+		unpack quote-${quote_PV}.tar.gz
+		unpack unicode-ident-${unicode_ident_PV}.tar.gz
+	else
+		unpack ${A}
+	fi
+}
+
 pkg_pretend() {
 	if use vulkan; then
 		if ! use video_cards_d3d12 &&
@@ -259,64 +273,33 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# NVK Subproject Handeling
-	if [[ ${PV} != *9999* ]]; then
-		# Move meson.build files
-		mv "${S}/subprojects/packagefiles/proc-macro2/meson.build" "${WORKDIR}/proc-macro2-${proc_macro2_PV}" || die
-		mv "${S}/subprojects/packagefiles/syn/meson.build" "${WORKDIR}/syn-${syn_PV}" || die
-		mv "${S}/subprojects/packagefiles/quote/meson.build" "${WORKDIR}/quote-${quote_PV}" || die
-		mv "${S}/subprojects/packagefiles/unicode-ident/meson.build" "${WORKDIR}/unicode-ident-${unicode_ident_PV}" || die
-
-		# Move to subproject folder
-		rm -r "${S}/subprojects/packagefiles/proc-macro2" "${S}/subprojects/packagefiles/syn" "${S}/subprojects/packagefiles/quote" "${S}/subprojects/packagefiles/unicode-ident" || die
-		mv "${WORKDIR}/proc-macro2-${proc_macro2_PV}" "${S}/subprojects/packagefiles/proc-macro2" || die
-		mv "${WORKDIR}/syn-${syn_PV}" "${S}/subprojects/packagefiles/syn" || die
-		mv "${WORKDIR}/quote-${quote_PV}" "${S}/subprojects/packagefiles/quote" || die
-		mv "${WORKDIR}/unicode-ident-${unicode_ident_PV}" "${S}/subprojects/packagefiles/unicode-ident" || die
-	fi
-
 	default
 	sed -i -e "/^PLATFORM_SYMBOLS/a '__gentoo_check_ldflags__'," \
 		bin/symbols-check.py || die # bug #830728
 
 	if use video_cards_nouveau; then
-  		### DXVK v2.0+ FIRE FESTIVAL (that is somehow working) ###
+		# NVK Subproject Handeling
+		# Move meson.build files
+		cp "${S}/subprojects/packagefiles/proc-macro2/meson.build" \
+			"${WORKDIR}/proc-macro2-${proc_macro2_PV}" || die
+		cp "${S}/subprojects/packagefiles/syn/meson.build" \
+			"${WORKDIR}/syn-${syn_PV}" || die
+		cp "${S}/subprojects/packagefiles/quote/meson.build" \
+			"${WORKDIR}/quote-${quote_PV}" || die
+		cp "${S}/subprojects/packagefiles/unicode-ident/meson.build" \
+			"${WORKDIR}/unicode-ident-${unicode_ident_PV}" || die
 
- 		# HACK: Always expose Vulkan memory model/Vulkan 1.3
-  		# NAK does properly support those now but the compiler is still WIP for pre-Volta GPUs (so I'll enable these at the cost of CTS tests)
-  		sed -i 's/KHR_vulkan_memory_model = nvk_use_nak(info)/KHR_vulkan_memory_model = true/' \
-			src/nouveau/vulkan/nvk_physical_device.c || die
-  		sed -i 's/vulkanMemoryModel = nvk_use_nak(info)/vulkanMemoryModel = true/' \
-			src/nouveau/vulkan/nvk_physical_device.c || die
-  		sed -i 's/VK_MAKE_VERSION(1, 0/VK_MAKE_VERSION(1, 3/' \
-			src/nouveau/vulkan/nvk_physical_device.c || die
+		# Move to subproject folder
+		mv "${WORKDIR}/proc-macro2-${proc_macro2_PV}" \
+			"${S}/subprojects/proc-macro2-${proc_macro2_PV}" || die
+		mv "${WORKDIR}/syn-${syn_PV}" \
+			"${S}/subprojects/syn-${syn_PV}" || die
+		mv "${WORKDIR}/quote-${quote_PV}" \
+			"${S}/subprojects/quote-${quote_PV}" || die
+		mv "${WORKDIR}/unicode-ident-${unicode_ident_PV}" \
+			"${S}/subprojects/unicode-ident-${unicode_ident_PV}" || die
 
-		# Add EXT_memory_budget (https://gitlab.freedesktop.org/nouveau/mesa/-/merge_requests/172)
-  		# (fixes a vulkaninfo warning)
-
-		# Add imad/iadd3 support (https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/27159)
-  		# (improves performance greatly in certain cases)
-
- 		# Remove compressed image limitation (https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26990)
-  		# (makes some more games run at the cost of CTS)
-
-  		# Add ESO/GPL support (https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/27024)
-  		# (enables shader precompile in DXVK and some Vulkan games; helps greatly in Overwatch 2)
-  		# TODO: Add this once fatal driver crashes on Overwatch 2 are fixed (I get a lot of BAR errors)
-		# "${FILESDIR}"/nvk-eso-gpl.patch
-
-  		rm src/vulkan/runtime/vk_shader.c src/vulkan/runtime/vk_shader.h || true
-
-		PATCHES+=(
-			"${FILESDIR}"/nvk-memory-budget.patch
-			"${FILESDIR}"/nak-iadd3-imad.patch
-		)
-
-  		# Mark this NVK package with a signature (so I could track who's using it for bug report purposes)
-  		sed -i 's/"Mesa " PACKAGE_VERSION/"Mesa DodoNVK " PACKAGE_VERSION/' \
-			src/nouveau/vulkan/nvk_physical_device.c || die
-
-		# HACK: Remove crate .rlib files before build
+  		# HACK: Remove crate .rlib files before build
   		# (This prevents build errors after a Rust update: https://github.com/mesonbuild/meson/issues/10706)
   		[ -d build/subprojects ] && find build/subprojects -iname "*.rlib" -delete
   		[ -d build/src/nouveau/compiler ] && find build/src/nouveau/compiler -iname "*.rlib" -delete
@@ -422,12 +405,14 @@ multilib_src_configure() {
 		vulkan_enable video_cards_radeonsi amd
 		vulkan_enable video_cards_v3d broadcom
 		if use video_cards_nouveau; then
-			vulkan_enable video_cards_nouveau nouveau-experimental
-			echo -e "[properties]\nrust_args = ['--target=\"${rust_abi}\"']\n\n[binaries]\nrust = 'rustc'" > "${T}/rust_fix.ini"
-			emesonargs+=(
-				--force-fallback-for=syn
-				--native-file="${T}"/rust_fix.ini
-			)
+			vulkan_enable video_cards_nouveau nouveau
+			if ! multilib_is_native_abi; then
+				einfo "Applying Gentoo hack for nvk - 1/2"
+				echo -e "[binaries]\nrust = ['rustc', '--target=$(rust_abi $CBUILD)']" > "${T}/rust_fix.ini"
+				emesonargs+=(
+					--native-file "${T}"/rust_fix.ini
+				)
+			fi
 		fi
 	fi
 
@@ -482,6 +467,7 @@ multilib_src_configure() {
 		$(meson_feature unwind libunwind)
 		$(meson_feature zstd)
 		$(meson_use cpu_flags_x86_sse2 sse2)
+		-Dintel-clc=$(usex video_cards_intel system auto)
 		-Dvalgrind=$(usex valgrind auto disabled)
 		-Dvideo-codecs=$(usex proprietary-codecs "all" "all_free")
 		-Dgallium-drivers=$(driver_list "${GALLIUM_DRIVERS[*]}")
@@ -490,6 +476,11 @@ multilib_src_configure() {
 		-Db_ndebug=$(usex debug false true)
 	)
 	meson_src_configure
+	if ! multilib_is_native_abi && use video_cards_nouveau; then
+		einfo "Applying Gentoo hack for nvk - 2/2"
+		sed -i -E '{N; s/(rule rust_COMPILER_FOR_BUILD\n command = rustc) --target=[a-zA-Z0-9=:-]+ (.*) -C link-arg=-m[[:digit:]]+/\1 \2/g}' build.ninja
+	fi
+
 }
 
 multilib_src_test() {
