@@ -1,4 +1,4 @@
-# Copyright 2022-2023 Gentoo Authors
+# Copyright 2022-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -18,8 +18,8 @@ if [[ ${PV} == 9999 ]]; then
 	)
 else
 	HASH_SPIRV=0bcc624926a25a2a273d07877fd25a6ff5ba1cfb
-	HASH_VULKAN=80207f9da86423ce33aff8328a792fd715f3c08f
-	HASH_DISPLAYINFO=275e6459c7ab1ddd4b125f28d0440716e4888078
+	HASH_VULKAN=98f440ce6868c94f5ec6e198cc1adda4760e8849
+	HASH_DISPLAYINFO=d39344f466caae0495ebac4d49b03a886d83ba3a
 	SRC_URI="
 		https://github.com/doitsujin/dxvk/archive/refs/tags/v${PV}.tar.gz
 			-> ${P}.tar.gz
@@ -28,7 +28,7 @@ else
 		https://github.com/KhronosGroup/Vulkan-Headers/archive/${HASH_VULKAN}.tar.gz
 			-> ${PN}-vulkan-headers-${HASH_VULKAN::10}.tar.gz
 		https://gitlab.freedesktop.org/JoshuaAshton/libdisplay-info/-/archive/${HASH_DISPLAYINFO}/${PN}-libdisplay-info-${HASH_DISPLAYINFO::10}.tar.bz2"
-	KEYWORDS="-* amd64 x86"
+	KEYWORDS="-* ~amd64 ~x86"
 fi
 # setup_dxvk.sh is no longer provided, fetch old until a better solution
 SRC_URI+=" https://raw.githubusercontent.com/doitsujin/dxvk/cd21cd7fa3b0df3e0819e21ca700b7627a838d69/setup_dxvk.sh"
@@ -50,9 +50,8 @@ BDEPEND="
 	!crossdev-mingw? ( dev-util/mingw64-toolchain[${MULTILIB_USEDEP}] )"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.10.3-wow64-setup.patch
 	"${FILESDIR}"/${PN}-reflex.patch
-	"${FILESDIR}"/0001-${PN}-async.patch
+	"${FILESDIR}"/${PN}-1.10.3-wow64-setup.patch
 )
 
 pkg_pretend() {
@@ -130,6 +129,7 @@ multilib_src_configure() {
 	local emesonargs=(
 		--prefix="${EPREFIX}"/usr/lib/${PN}
 		--{bin,lib}dir=x${MULTILIB_ABI_FLAG: -2}
+		--force-fallback-for=libdisplay-info # system's is ELF (unusable)
 		$(meson_use {,enable_}d3d9)
 		$(meson_use {,enable_}d3d10)
 		$(meson_use {,enable_}d3d11)
