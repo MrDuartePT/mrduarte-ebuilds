@@ -12,11 +12,26 @@ HOMEPAGE="https://github.com/MrDuartePT/deckifier-hyprland"
 LICENSE="MIT"
 SLOT="0"
 
+IUSE="hyprland-sddm hyprland-greetd hyprland-lightdm kde"
+REQUIRED_USE="^^ ( hyprland-sddm hyprland-greetd hyprland-lightdm kde )"
+
 RDEPEND="gui-wm/gamescope
 	games-util/steam-client-meta
 	games-util/mangohud
 	dev-python/evdev
 "
+
+src_unpack() {
+	if use hyprland-greetd; then
+		EGIT_BRANCH="hyprland-greetd"
+	elif use hyprland-lightdm; then
+		EGIT_BRANCH="lightdm"
+	elif use kde; then
+		EGIT_BRANCH="kde"
+	fi
+
+	git-r3_src_unpack
+}
 
 src_install() {
 	insinto "etc/"
@@ -31,7 +46,7 @@ src_install() {
 	fperms +x "/usr/bin/export-gpu"
 	fperms +x "/usr/bin/gamescope-session"
 	fperms +x "/usr/bin/steamos-session-select"
-	fperms +x "/usr/bin/steam-powerbuttond"
+	#fperms +x "/usr/bin/steam-powerbuttond"
 
 	fperms +x "/usr/share/gamescope-session/gamescope-session-script"
 
