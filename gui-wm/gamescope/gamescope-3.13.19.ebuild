@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,12 +6,20 @@ EAPI=8
 inherit fcaps meson
 
 RESHADE_COMMIT="9fdbea6892f9959fdc18095d035976c574b268b7"
-MY_PV="3.13.16.4-plus3"
+MY_PV=$(ver_rs 3 -)
+MY_PV="${MY_PV//_/-}"
 
-DESCRIPTION="Efficient micro-compositor for running games"
+DESCRIPTION="Efficient micro-compositor for running games (with patches for Steam UI)"
 HOMEPAGE="https://github.com/ValveSoftware/gamescope"
-SRC_URI="https://github.com/ChimeraOS/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/Joshua-Ashton/reshade/archive/${RESHADE_COMMIT}.tar.gz -> reshade-${RESHADE_COMMIT}.tar.gz"
+SRC_URI="https://github.com/ValveSoftware/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/Joshua-Ashton/reshade/archive/${RESHADE_COMMIT}.tar.gz -> reshade-${RESHADE_COMMIT}.tar.gz
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/add_720p_var.patch -> add_720p_var.patch
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/chimeraos.patch -> chimeraos.patch
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/crashfix.patch -> crashfix.patch
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/glm_exper.patch -> glm_exper.patch
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/legion_go.patch -> legion_go.patch
+	https://raw.githubusercontent.com/hhd-dev/gamescope-plusplus/master/touch_gestures_env.patch -> touch_gestures_env.patch
+	"
 KEYWORDS="~amd64"
 LICENSE="BSD-2"
 SLOT="0"
@@ -22,7 +30,6 @@ RDEPEND="
 	>=dev-libs/wayland-1.21
 	>=dev-libs/wayland-protocols-1.17
 	=gui-libs/wlroots-0.17*[X,libinput(+)]
-	>=media-libs/libavif-1.0.0:=
 	>=media-libs/libdisplay-info-0.1.1
 	media-libs/libsdl2[video,vulkan]
 	media-libs/vulkan-loader
@@ -35,7 +42,6 @@ RDEPEND="
 	x11-libs/libXdamage
 	x11-libs/libXext
 	x11-libs/libXfixes
-	x11-libs/libXi
 	x11-libs/libxkbcommon
 	x11-libs/libXmu
 	x11-libs/libXrender
@@ -47,9 +53,9 @@ RDEPEND="
 "
 DEPEND="
 	${RDEPEND}
-	<dev-libs/stb-20231010
+	dev-libs/stb
 	dev-util/vulkan-headers
-	<media-libs/glm-1.0.0
+	media-libs/glm
 	dev-util/spirv-headers
 	wsi-layer? ( >=media-libs/vkroots-0_p20231108 )
 "
@@ -60,6 +66,16 @@ BDEPEND="
 "
 
 S="${WORKDIR}/${PN}-${MY_PV}"
+
+PATCHES=(
+	"${DISTDIR}/glm_exper.patch"
+	"${DISTDIR}/chimeraos.patch"
+	"${DISTDIR}/crashfix.patch"
+	"${DISTDIR}/add_720p_var.patch"
+	"${DISTDIR}/touch_gestures_env.patch"
+	"${DISTDIR}/legion_go.patch"
+)
+
 
 FILECAPS=(
 	cap_sys_nice usr/bin/${PN}
