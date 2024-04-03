@@ -74,6 +74,7 @@ PATCHES=(
 	"${DISTDIR}/add_720p_var.patch"
 	"${DISTDIR}/touch_gestures_env.patch"
 	"${DISTDIR}/legion_go.patch"
+	"${FILESDIR}/${PN}-deprecated-stb.patch"
 )
 
 
