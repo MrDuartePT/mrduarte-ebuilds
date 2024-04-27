@@ -16,7 +16,7 @@ IUSE="hyprland-sddm hyprland-greetd hyprland-lightdm kde"
 REQUIRED_USE="^^ ( hyprland-sddm hyprland-greetd hyprland-lightdm kde )"
 
 RDEPEND="gui-wm/gamescope
-	games-util/steam-client-meta
+	games-util/steam-launcher
 	games-util/mangohud
 	dev-python/evdev
 "
