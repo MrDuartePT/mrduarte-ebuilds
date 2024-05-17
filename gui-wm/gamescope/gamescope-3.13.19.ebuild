@@ -57,7 +57,7 @@ DEPEND="
 	dev-util/vulkan-headers
 	media-libs/glm
 	dev-util/spirv-headers
-	wsi-layer? ( >=media-libs/vkroots-0_p20231108 )
+	wsi-layer? ( =media-libs/vkroots-0_p20231108 )
 "
 BDEPEND="
 	dev-util/glslang
