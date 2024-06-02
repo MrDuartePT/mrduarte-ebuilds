@@ -10,21 +10,27 @@ WLROOTS_COMMIT="a5c9826e6d7d8b504b07d1c02425e6f62b020791"
 MY_PV=$(ver_rs 3 -)
 MY_PV="${MY_PV//_/-}"
 
-DESCRIPTION="Efficient micro-compositor for running games"
+DESCRIPTION="Efficient micro-compositor for running games (ChimeraOS)"
 HOMEPAGE="https://github.com/ValveSoftware/gamescope"
 if [[ ${PV} == "9999" ]]; then
-	EGIT_REPO_URI="https://github.com/ValveSoftware/${PN}.git"
+	#EGIT_REPO_URI="https://github.com/ValveSoftware/${PN}.git"
+	EGIT_REPO_URI="https://github.com/ChimeraOS/${PN}.git"
 	# Prevent wlroots and other submodule from being pull
 	# Not messing with system packages
 	EGIT_SUBMODULES=( src/reshade )
 	inherit git-r3
 else
+	COMMIT="bc4fa1097c1e6dad8efdf2cc3fc0e0da14c388c4"
+	#SRC_URI="
+	#	https://github.com/ChimeraOS/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
+	#	https://github.com/Joshua-Ashton/reshade/archive/${RESHADE_COMMIT}.tar.gz -> reshade-${RESHADE_COMMIT}.tar.gz
+	#"
 	SRC_URI="
-		https://github.com/ValveSoftware/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/ChimeraOS/${PN}/archive/${COMMIT}.tar.gz -> ${PN}-${COMMIT}.tar.gz
 		https://github.com/Joshua-Ashton/reshade/archive/${RESHADE_COMMIT}.tar.gz -> reshade-${RESHADE_COMMIT}.tar.gz
 	"
 	KEYWORDS="~amd64"
-	S="${WORKDIR}/${PN}-${MY_PV}"
+	S="${WORKDIR}/${PN}-${COMMIT}"
 fi
 
 # Until wlroots 0.18 is released.
@@ -93,9 +99,6 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-deprecated-stb.patch
-	"${FILESDIR}"/${PN}-720p.patch
-	"${FILESDIR}"/${PN}-external-rotation.patch
-	"${FILESDIR}"/${PN}-panel-type.patch
 )
 
 FILECAPS=(
