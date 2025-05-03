@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>gonegrier.duarte@gmail.com</email>
+		<name>Gonçalo Negrier Duarte</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">SneWs/tail-tray</remote-id>
+		<bugs-to>https://github.com/SneWs/tail-tray/issues</bugs-to>
+	</upstream>
+	<use>
+		<flag name="davfs">Tail drive support using davfs</flag>
+	</use>
+</pkgmetadata>
